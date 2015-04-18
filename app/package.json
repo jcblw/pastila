@@ -1,0 +1,12 @@
+{
+  "name": "test-electron-app",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "nativeinstall": "./native-install.sh"
+  },
+  "dependencies": {
+    "node-jsx": "^0.12.4",
+    "react": "^0.13.1"
+  }
+}
