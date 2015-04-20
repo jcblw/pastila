@@ -1,4 +1,4 @@
-# Electron Test App
+# Gist Notes App
 
 This is a small test app built on [Electron](https://github.com/atom/electron). The client portion of the app is build in [React](https://facebook.github.io/react/index.html).
 
