@@ -16,7 +16,7 @@ module.exports = class Notes extends React.Component {
       return note.content;
     }
 
-    return 'Open a not by clicking a note to open or create a new one';
+    return 'Open a note by clicking a note in the sidebar';
   }
 
   onFileChange(content) {

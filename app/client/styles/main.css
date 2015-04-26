@@ -38,5 +38,7 @@ body, html {
 .menu .list {
   list-style-type: none;
   padding: 0;
+  overflow: hidden;
   color: #444;
+  white-space: nowrap;
 }

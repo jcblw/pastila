@@ -63,10 +63,8 @@ ipc.on('gist:get', function(e, id) {
 });
 
 ipc.on('gist:update', function(e, id, content) {
-  console.log('updating gist');
   pastila.gists.update(id, content, function(err) {
     if (err) {
-      console.log(err);
       return e.sender.send('store:error', 'gists:update');
     }
     e.sender.send('gist:update'); // just to show some indication it updated
