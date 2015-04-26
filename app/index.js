@@ -14,7 +14,7 @@ var
   levelup = require('levelup'),
   ttl = require('level-ttl'),
   path = require('path'),
-  dbPath = path.resolve(process.cwd(), '.pastila'),
+  dbPath = path.resolve(__dirname, '.pastila'),
   db = levelup(dbPath, {valueEncoding: 'json'}),
   mainWindow,
   pastila;

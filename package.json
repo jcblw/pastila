@@ -15,7 +15,7 @@
   "author": "Jacob Lowe",
   "license": "MIT",
   "devDependencies": {
-    "atom-shell-packager": "^2.1.1",
+    "atom-shell-packager": "git+ssh://git@github.com:jcblw/atom-shell-packager.git#master",
     "electron-prebuilt": "^0.24.0"
   }
 }
