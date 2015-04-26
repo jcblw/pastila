@@ -1,7 +1,7 @@
 {
   "name": "pastila",
   "version": "1.0.0",
-  "description": "A base line electron app",
+  "description": "a electron a that takes notes via markdown and github gist.",
   "main": "index.js",
   "scripts": {
     "start": "electron app/",
