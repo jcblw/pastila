@@ -13,7 +13,9 @@ var
   dispatcher = require('./src/dispatcher'),
   levelup = require('levelup'),
   ttl = require('level-ttl'),
-  db = levelup('./.pastila', {valueEncoding: 'json'}),
+  path = require('path'),
+  dbPath = path.resolve(process.cwd(), '.pastila'),
+  db = levelup(dbPath, {valueEncoding: 'json'}),
   mainWindow,
   pastila;
 
