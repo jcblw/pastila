@@ -9,24 +9,28 @@ var
   ipc = require('ipc'),
   util = require('util'),
   qs = require('querystring'),
+  fs = require('fs'),
   Pastila = require('./src/pastila'),
   dispatcher = require('./src/dispatcher'),
   levelup = require('levelup'),
   ttl = require('level-ttl'),
   path = require('path'),
+  logPath = path.resolve(__dirname, 'pastila-session.log'),
+  log = fs.createWriteStream(logPath),
   dbPath = path.resolve(__dirname, '.pastila'),
   db = levelup(dbPath, {valueEncoding: 'json'}),
   mainWindow,
   pastila;
 
-db = ttl(db, { defaultTTL: 15 * 60 * 1000 }); // invalidate cache every 15 minutes
+db = ttl(db); // invalidate cache every 15 minutes
 
 require('crash-reporter').start(); // report crashes
 
 pastila = new Pastila({
   db: db,
   clientId: '4e73f807eaa53c1b7661',
-  serverLocation: 'https://gatekeeper-gistnotes.herokuapp.com'
+  serverLocation: 'https://gatekeeper-gistnotes.herokuapp.com',
+  log: log
 });
 
 ipc.on('auth:start', function(e) {

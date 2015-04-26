@@ -12,7 +12,12 @@ module.exports = class Store {
     this.type = options.type;
     this.endpoint = options.endpoint;
     this.token = options.token;
+    this._log = options.log;
     this.baseUrl = options.baseUrl || 'https://api.github.com';
+  }
+
+  log(msg) {
+      this._log.write(`main process [${Date.now()}] ${msg} \n\r`);
   }
 
   request(type, endpoint, callback) {
@@ -49,6 +54,9 @@ module.exports = class Store {
   }
 
   setCache(type, resource, callback) {
+    if (type.match(/^gist/)) {
+      return this.db.put(type, resource, { ttl: 15 * 60 * 1000 }, callback);
+    }
     this.db.put(type, resource, callback);
   }
 

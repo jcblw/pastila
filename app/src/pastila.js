@@ -8,6 +8,7 @@ module.exports = class Pastila {
 
   constructor(options) {
     this.db = options.db;
+    this.log = options.log;
     this.auth = new Auth(options);
   }
 

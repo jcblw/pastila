@@ -2,7 +2,8 @@
 
 const
   ace = require('brace'),
-  React = require('react');
+  React = require('react'),
+  _ = require('lodash');
 
 require('brace/theme/github');
 require('brace/theme/textmate');
@@ -54,7 +55,7 @@ module.exports = React.createClass({
     }
 
     if (this.props.onChange) {
-      this.props.onChange(value);
+      this.props.onChange(value, this.props.id);
       this.setState({value: value});
     }
   },
@@ -68,7 +69,7 @@ module.exports = React.createClass({
     editor.setTheme('ace/theme/'+this.props.theme);
     editor.setFontSize(this.props.fontSize);
     editor.on('change', this.onChange);
-    editor.setValue(this.props.value);
+    editor.setValue(this.props.value, -1);
     editor.renderer.setShowGutter(this.props.showGutter);
     editor.setOption('maxLines', this.props.maxLines);
     editor.setOption('readOnly', this.props.readOnly);
@@ -107,7 +108,7 @@ module.exports = React.createClass({
         height: this.props.height
       };
     return (
-      <div id={this.props.name} onChange={this.onChange} style={divStyle}>
+      <div id={this.props.name} onChange={_.debounce(_.bind(this.onChange, this), 500)} style={divStyle}>
       </div>
     );
   }

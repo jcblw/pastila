@@ -11,6 +11,7 @@ module.exports = class Gist extends Store {
   }
 
   all(callback) {
+    this.log(`gist::all - getting gist for user ${this.username}`);
     this.request('gists', `/users/${this.username}/gists`, callback);
   }
 
@@ -22,10 +23,12 @@ module.exports = class Gist extends Store {
   }
 
   get(id, callback) {
+    this.log(`gist::get - getting gist ${id}`);
     this.request(`gists:${id}`, `/gists/${id}`, callback);
   }
 
   update(id, gist, callback) {
+    this.log(`gist::update - updating gist ${id}`);
     this.patch(`/gists/${id}`, {files: gist.files}, (err, _gist) => {
       callback(err, _gist);
       if (!err && _gist && _gist.id) {
