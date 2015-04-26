@@ -13,7 +13,9 @@ module.exports = class NoteItem extends React.Component {
       note = this.props.note,
       files = Object.keys(note.files);
     return (
-      <li onClick={this.loadNote.bind(this)} data-id={note.id}>{files[0]}</li>
+      <li className="listitem" onClick={this.loadNote.bind(this)} data-id={note.id}>
+        {files[0]}
+      </li>
     );
   }
 };

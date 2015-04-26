@@ -21,7 +21,7 @@ module.exports = class App extends React.Component {
 
     if (this.state.isAuthed) {
       content = (
-        <Notes notes={this.state.notes} />
+        <Notes notes={this.state.notes} note={this.state.note} />
       );
     } else if (this.state.isAuthenticating) {
       content = (

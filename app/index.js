@@ -1,6 +1,7 @@
 'use strict';
 
-require('node-jsx').install({harmony: true});
+// ES6!
+require('babel/register');
 
 var
   app = require('app'),
@@ -11,9 +12,12 @@ var
   Pastila = require('./src/pastila'),
   dispatcher = require('./src/dispatcher'),
   levelup = require('levelup'),
+  ttl = require('level-ttl'),
   db = levelup('./.pastila', {valueEncoding: 'json'}),
   mainWindow,
   pastila;
+
+db = ttl(db, { defaultTTL: 15 * 60 * 1000 }); // invalidate cache every 15 minutes
 
 require('crash-reporter').start(); // report crashes
 
@@ -58,6 +62,17 @@ ipc.on('gist:get', function(e, id) {
   });
 });
 
+ipc.on('gist:update', function(e, id, content) {
+  console.log('updating gist');
+  pastila.gists.update(id, content, function(err) {
+    if (err) {
+      console.log(err);
+      return e.sender.send('store:error', 'gists:update');
+    }
+    e.sender.send('gist:update'); // just to show some indication it updated
+  });
+});
+
 app.on('window-all-closed', function() {
   // write state to db for when reopening
   // pastila.saveState();
@@ -66,8 +81,8 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
-    width: 400,
-    height: 500
+    width: 600,
+    height: 600
   });
   mainWindow.on('closed', function() {
     mainWindow = null;

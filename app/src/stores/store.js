@@ -22,7 +22,7 @@ module.exports = class Store {
           if (err) {
             return callback(err);
           }
-          
+
           if (typeof this.parse === 'function') {
             _resource = this.parse(_resource);
           }
@@ -36,6 +36,14 @@ module.exports = class Store {
     });
   }
 
+  patch(endpoint, payload, callback) {
+    this.requestHTTP({
+      method: 'PATCH',
+      body: payload,
+      uri: endpoint
+    }, callback);
+  }
+
   getCache(type, callback) {
     this.db.get(type, callback);
   }
@@ -44,18 +52,20 @@ module.exports = class Store {
     this.db.put(type, resource, callback);
   }
 
+  removeCache(type, callback) {
+    this.db.del(type, callback);
+  }
+
   read(callback) {
     this.request(this.type, this.endpoint, callback);
   }
 
   requestHTTP(options, callback) {
-    options.qs = options.qs || {};
     options.headers = {};
     options.headers['User-Agent'] = 'pastila';
-    options.qs.access_token = this.token;
+    options.headers.Authorization = `token ${this.token}`;
     options.json = true;
     options.baseUrl = options.baseUrl || this.baseUrl;
-    console.log(options);
     request(options, function(err, results, body) {
       callback(err, body);
     });

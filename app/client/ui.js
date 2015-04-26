@@ -6,46 +6,56 @@ const
   dispatcher = require('./dispatcher');
 
 module.exports = class UI {
-  constructor (props) {
+  constructor(props) {
     this.app = new React.render(<App isAuthed={props.isAuthed} />, document.body);
     if (props.isAuthed) {
       dispatcher.emit('gist:all');
     }
   }
-  update (type, state) {
-    if (type === 'auth:success') {
-      return this.app.setState({
-        isAuthenticating: false,
-        isAuthed: true
-      });
-    }
 
-    if (type === 'auth:error') {
-      return this.app.setState({
-        isAuthenticating: false,
-        isAuthed: false,
-        errorMessage: state
-      });
-    }
+  onAuthSuccess() {
+    this.app.setState({
+      isAuthenticating: false,
+      isAuthed: true
+    });
+  }
 
-    if (type === 'auth:start') {
-      return this.app.setState({
-        isAuthenticating: true,
-        isAuthed: false
-      });
-    }
+  onAuthError(state) {
+    this.app.setState({
+      isAuthenticating: false,
+      isAuthed: false,
+      errorMessage: state
+    });
+  }
 
-    if (type === 'gist:all') {
-      return this.app.setState({
-        notes: state
-      });
-    }
+  onAuthStart() {
+    this.app.setState({
+      isAuthenticating: true,
+      isAuthed: false
+    });
+  }
 
-    if (type === 'gist:get') {
-      console.log(state);
-      return this.app.setState({
-        note: state
-      });
+  onGistAll(state) {
+    this.app.setState({
+      notes: state
+    });
+  }
+
+  onGistGet(state) {
+    this.app.setState({
+      note: state
+    });
+  }
+
+  update(type, ...args) {
+    var handler = 'on' + ((type || '').split(':').map(UI.toUpperCase).join(''));
+    if (typeof this[handler] !== 'function') {
+      return;
     }
+    this[handler](...args);
+  }
+
+  static toUpperCase(str = '') {
+    return str[0].toUpperCase() + str.substr(1);
   }
 };

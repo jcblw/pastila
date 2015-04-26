@@ -11,10 +11,10 @@ const
 module.exports = class Auth extends Store {
 
   constructor (options = {}) {
+    super(options);
     this.port = options.port;
     this.clientId = options.clientId;
     this.serverLocation = options.serverLocation;
-    super(options);
   }
 
   start() {

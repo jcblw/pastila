@@ -6,8 +6,8 @@ const
 module.exports = class Gist extends Store {
 
   constructor(options) {
-    this.username = options.username;
     super(options);
+    this.username = options.username;
   }
 
   all(callback) {
@@ -23,6 +23,15 @@ module.exports = class Gist extends Store {
 
   get(id, callback) {
     this.request(`gists:${id}`, `/gists/${id}`, callback);
+  }
+
+  update(id, gist, callback) {
+    this.patch(`/gists/${id}`, {files: gist.files}, (err, _gist) => {
+      callback(err, _gist);
+      if (!err && _gist && _gist.id) {
+        this.setCache(`gists:${id}`, gist);
+      }
+    });
   }
 
   static markdownOnly(gist) {
