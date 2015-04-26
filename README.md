@@ -7,7 +7,7 @@ This is a small app built on [Electron](https://github.com/atom/electron). The c
 ## Install
 
 ```shell
-git clone git@github.com:jcblw/electron-test-app.git
+git clone git@github.com:jcblw/pastila.git
 ```
 
 To install the dependencies do.
