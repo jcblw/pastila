@@ -27,6 +27,10 @@ module.exports = class Gist extends Store {
     this.request(`gists:${id}`, `/gists/${id}`, callback);
   }
 
+  create(gist, callback) {
+
+  }
+
   update(id, gist, callback) {
     this.log(`gist::update - updating gist ${id}`);
     this.patch(`/gists/${id}`, {files: gist.files}, (err, _gist) => {

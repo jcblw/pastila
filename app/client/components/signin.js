@@ -10,7 +10,10 @@ module.exports = class SignIn extends React.Component {
 
   render () {
     return (
-      <button onClick={this.onAuthGithub.bind(this)}>Auth Github</button>
+      <div className="signin u-textAlign--center">
+        <h1>Sign into Github</h1>
+        <button className="pure-button" onClick={this.onAuthGithub.bind(this)}>Auth Github</button>
+      </div>
     );
   }
 };

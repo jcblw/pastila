@@ -1,0 +1,13 @@
+.avatar {
+  background-size: cover;
+  background-position: center center;
+}
+
+.avatar--medium {
+  width: 32px;
+  height: 32px;
+}
+
+.avatar--rounded {
+  border-radius: 4px;
+}

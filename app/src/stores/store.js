@@ -55,6 +55,7 @@ module.exports = class Store {
 
   setCache(type, resource, callback) {
     if (type.match(/^gist/)) {
+      // only cache for 15 min
       return this.db.put(type, resource, { ttl: 15 * 60 * 1000 }, callback);
     }
     this.db.put(type, resource, callback);

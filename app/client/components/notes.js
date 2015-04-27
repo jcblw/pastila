@@ -18,8 +18,8 @@ module.exports = class Notes extends React.Component {
 
     return (
       <div className="notes-container">
-        <Menu notes={this.props.notes} style={menuStyle}></Menu>
-        <Workspace note={this.props.note} style={workspaceStyle}></Workspace>
+        <Menu notes={this.props.notes}></Menu>
+        <Workspace note={this.props.note}></Workspace>
       </div>
     );
   }
