@@ -12,6 +12,7 @@ body, html {
   background: white;
   margin: 0;
   color: #7a7a7a;
+  font-family: osaka-mono!important;
 }
 
 * {

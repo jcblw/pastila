@@ -40,7 +40,7 @@ module.exports = React.createClass({
       height : '100%',
       width  : '100%',
       value  : '',
-      fontSize   : 15,
+      fontSize   : 19,
       showGutter : false,
       onChange   : null,
       onLoad     : null,
@@ -64,6 +64,9 @@ module.exports = React.createClass({
       editor = this.editor = ace.edit(this.props.name),
       session = editor.getSession();
     editor.$blockScrolling = Infinity;
+    editor.setOptions({
+      fontFamily: 'osaka-mono'
+    });
     session.setMode('ace/mode/'+this.props.mode);
     session.setUseWrapMode(true);
     editor.setTheme('ace/theme/'+this.props.theme);
