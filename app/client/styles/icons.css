@@ -1,8 +1,21 @@
+[class^="icon"] {
+  vertical-align: middle;
+}
+
 .icon--medium {
   width: 32px;
   height: 32px;
 }
 
+.icon--small {
+  width: 16px;
+  height: 16px;
+}
+
 .icon--dark {
   fill: #7a7a7a;
+}
+
+.icon--light {
+  fill: #f2f2f2;
 }

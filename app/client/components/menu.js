@@ -1,8 +1,7 @@
 const
   React = require('react/addons'),
   NoteItem = require('./note-item'),
-  Icon = require('./icon'),
-  Avatar = require('./avatar'),
+  ContextLink = require('./context-link'),
   dispatcher = require('../dispatcher');
 
 module.exports = class Notes extends React.Component {
@@ -32,20 +31,25 @@ module.exports = class Notes extends React.Component {
     return (
       <div className="menu pure-menu u-padding--default" style={this.props.style}>
         <ul className="list">
-          <li className="u-textAlign--center u-verticalSpacing--default">
-            <Icon type="stacks" size="medium" color="dark"></Icon>
-          </li>
-          <li className="u-textAlign--center u-verticalSpacing--default">
-            <Icon type="pen" size="medium" color="dark"></Icon>
-          </li>
+          <ContextLink icon="stacks" size="medium" color="dark" className="u-textAlign--center u-verticalSpacing--default">
+            <ul className="u-textAlign--left">
+              <li className="list-header">
+                Notes
+              </li>
+              {list}
+            </ul>
+          </ContextLink>
+          <ContextLink icon="pen" size="medium" color="dark" className="u-textAlign--center u-verticalSpacing--default">
+            Bar
+          </ContextLink>
         </ul>
         <ul className="list list--bottom">
-          <li className="u-textAlign--center u-verticalSpacing--default">
-            <Icon type="plus" size="medium" color="dark"></Icon>
-          </li>
-          <li className="u-textAlign--center u-verticalSpacing--default">
-            <Avatar src={this.props.user} size="medium"></Avatar>
-          </li>
+          <ContextLink icon="plus" size="medium" color="dark" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
+            Baz
+          </ContextLink>
+          <ContextLink user={this.props.user} size="medium" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
+            Qux
+          </ContextLink>
         </ul>
       </div>
     );

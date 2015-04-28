@@ -9,6 +9,7 @@
 body, html {
   height: 100%;
   min-height: 100%;
+  overflow: hidden;
   background: white;
   margin: 0;
   color: #7a7a7a;
@@ -40,13 +41,13 @@ body, html {
   background: #f2f2f2;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 
 .menu .list {
   flex: 1;
   list-style-type: none;
   padding: 0;
-  overflow: hidden;
   color: #7a7a7a;
   white-space: nowrap;
   margin: 0;
@@ -58,6 +59,72 @@ body, html {
   bottom: 0;
 }
 
+.menu .list li {
+  position: relative;
+}
+
 .workspace {
   flex: 1;
+  z-index: 1;
+}
+
+.contextLink--container {
+  position: absolute;
+  top: 0;
+  left: 70px;
+  background: #fff;
+  border-radius: 4px;
+  display: none;
+  padding: 20px;
+  border: 3px solid #f2f2f2;
+  box-shadow: 0px 1px 3px rgba(0,0,0,.3);
+  max-height: 50vh;
+  width: 50vw;
+  overflow: scroll;
+}
+
+.contextLink--container.contextLink--bottom {
+  top: auto;
+  bottom: 0;
+}
+
+.contextLink--container.is-open {
+  display: block;
+}
+
+.contextLink--container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contextLink--container ul li {
+  margin: 0 -20px;
+  padding: 0;
+}
+
+.contextLink--container ul li.list-header {
+  font-size: 1.1em;
+  font-weight: 700;
+  padding: 5px 20px;
+}
+
+.contextLink--container ul li:first-child {
+  margin-top: -20px;
+}
+
+.contextLink--container ul li:last-child {
+  margin-bottom: -20px;
+}
+
+.contextLink--container ul li a {
+  color: #7a7a7a;
+  text-decoration: none;
+  display: block;
+  padding: 10px 20px;
+}
+
+.contextLink--container ul li a:hover {
+  color: #7a7a7a;
+  text-decoration: underline;
 }

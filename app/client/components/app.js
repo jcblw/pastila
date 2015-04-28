@@ -4,7 +4,8 @@ const
   React = require('react'),
   Auth = require('./auth'),
   Notes = require('./notes'),
-  SignIn = require('./signin');
+  SignIn = require('./signin'),
+  dispatcher = require('../dispatcher');
 
 module.exports = class App extends React.Component {
 
@@ -14,6 +15,10 @@ module.exports = class App extends React.Component {
       isAuthed: this.props.isAuthed,
       isAuthenticating: false
     };
+  }
+
+  onClick() {
+    dispatcher.emit('contextlink:close');
   }
 
   render () {
@@ -34,7 +39,7 @@ module.exports = class App extends React.Component {
     }
 
     return (
-      <div className='app-container'>
+      <div className='app-container' onClick={this.onClick.bind(this)}>
         {content}
       </div>
     );
