@@ -29,7 +29,6 @@ module.exports = class Gist extends Store {
 
   create(gist, callback) {
     this.post('/gists', gist, (err, _gist) => {
-      console.log(err, _gist);
       if (err) {
         return callback(err);
       }

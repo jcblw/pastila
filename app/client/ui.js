@@ -47,6 +47,7 @@ module.exports = class UI {
     this.app.setState({
       note: state
     });
+    dispatcher.emit('contextlink:close');
   }
 
   onState(state) {

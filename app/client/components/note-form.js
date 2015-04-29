@@ -68,7 +68,7 @@ module.exports = class EditNoteForm extends React.Component {
     };
 
     payload.files[fileName] = {
-      content: ' '
+      content: '. '
     };
 
     dispatcher.emit('gist:create', payload);
