@@ -30,6 +30,18 @@ ipc.on('auth:error', function(err) {
   console.log(err);
 });
 
+
+window.onbeforeunload = function(e) {
+  dispatcher.emit('app:getState');
+  return false;
+};
+
+dispatcher.on('app:state', function(state){
+  ipc.send('app:state', state);
+  window.onbeforeunload = null;
+  setTimeout(window.close, 0);
+});
+
 // basic updates from main process.
 dispatcher.on('gist:all', ipc.send.bind(ipc, 'gist:all'));
 ipc.on('gist:all', function(gists){
@@ -40,7 +52,13 @@ ipc.on('gist:get', function(gist){
   ui.update('gist:get', gist);
 });
 dispatcher.on('gist:update', ipc.send.bind(ipc, 'gist:update'));
+dispatcher.on('gist:create', ipc.send.bind(ipc, 'gist:create'));
 
+
+ipc.on('app:initialState', function(state) {
+  ui.update('state', state);
+});
 
 // set this up after handlers are attached
 ui = new UI(query);
+ipc.send('app:getInitialState');

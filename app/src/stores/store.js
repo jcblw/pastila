@@ -49,6 +49,14 @@ module.exports = class Store {
     }, callback);
   }
 
+  post(endpoint, payload, callback) {
+    this.requestHTTP({
+      method: 'POST',
+      body: payload,
+      uri: endpoint
+    }, callback);
+  }
+
   getCache(type, callback) {
     this.db.get(type, callback);
   }
@@ -76,6 +84,9 @@ module.exports = class Store {
     options.json = true;
     options.baseUrl = options.baseUrl || this.baseUrl;
     request(options, function(err, results, body) {
+      if (!err && results.statusCode > 300) {
+        err = new Error('Bad response from api');
+      }
       callback(err, body);
     });
   }

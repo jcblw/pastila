@@ -28,12 +28,24 @@ module.exports = class Gist extends Store {
   }
 
   create(gist, callback) {
-
+    this.post('/gists', gist, (err, _gist) => {
+      console.log(err, _gist);
+      if (err) {
+        return callback(err);
+      }
+      callback(err, _gist);
+      this.setCache(`gists:${_gist.id}`, _gist);
+    });
   }
 
   update(id, gist, callback) {
+    const
+      payload = {
+        files: gist.files,
+        description: gist.description
+      };
     this.log(`gist::update - updating gist ${id}`);
-    this.patch(`/gists/${id}`, {files: gist.files}, (err, _gist) => {
+    this.patch(`/gists/${id}`, payload, (err, _gist) => {
       callback(err, _gist);
       if (!err && _gist && _gist.id) {
         this.setCache(`gists:${id}`, gist);

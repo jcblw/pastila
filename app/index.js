@@ -64,6 +64,7 @@ ipc.on('gist:get', function(e, id) {
       if (err) {
         return e.sender.send('store:error', 'gists:get');
       }
+      // need to update list, need to abstract these events
       e.sender.send('gist:get', gist);
   });
 });
@@ -77,10 +78,32 @@ ipc.on('gist:update', function(e, id, content) {
   });
 });
 
+ipc.on('gist:create', function(e, content) {
+  pastila.gists.create(content, function(err, _gist) {
+    if (err) {
+      return e.sender.send('store:error', 'gists:create');
+    }
+    e.sender.send('gist:get', _gist);
+  });
+});
+
 app.on('window-all-closed', function() {
   // write state to db for when reopening
-  // pastila.saveState();
   app.quit();
+});
+
+ipc.on('app:state', function(e, state) {
+  // pastila.saveState();
+  db.put('state', state, app.quit.bind(app));
+});
+
+ipc.on('app:getInitialState', function(e) {
+  db.get('state', function(err, state) {
+      if (err) {
+        return;
+      }
+      e.sender.send('app:initialState', state);
+  });
 });
 
 app.on('ready', function() {

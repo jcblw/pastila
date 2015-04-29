@@ -2,6 +2,7 @@ const
   React = require('react/addons'),
   NoteItem = require('./note-item'),
   ContextLink = require('./context-link'),
+  NoteForm = require('./note-form'),
   dispatcher = require('../dispatcher');
 
 module.exports = class Notes extends React.Component {
@@ -26,12 +27,22 @@ module.exports = class Notes extends React.Component {
     return React.addons.createFragment(nodes);
   }
 
+  noop() {}
+
+  signout() {
+    dispatcher.emit('auth:signout');
+  }
+
   render () {
-    var list = this.getNodeList();
+    const
+      list = this.getNodeList(),
+      penClassName = (this.props.note ? '' : 'is-hidden ') +
+        'u-textAlign--center u-verticalSpacing--default';
+
     return (
       <div className="menu pure-menu u-padding--default" style={this.props.style}>
         <ul className="list">
-          <ContextLink icon="stacks" size="medium" color="dark" className="u-textAlign--center u-verticalSpacing--default">
+          <ContextLink icon="stacks" size="medium" color="dark" className='u-textAlign--center u-verticalSpacing--default'>
             <ul className="u-textAlign--left">
               <li className="list-header">
                 Notes
@@ -39,16 +50,24 @@ module.exports = class Notes extends React.Component {
               {list}
             </ul>
           </ContextLink>
-          <ContextLink icon="pen" size="medium" color="dark" className="u-textAlign--center u-verticalSpacing--default">
-            Bar
+          <ContextLink icon="pen" size="medium" color="dark" className={penClassName}>
+            <NoteForm note={this.props.note} onChange={this.noop}></NoteForm>
           </ContextLink>
         </ul>
         <ul className="list list--bottom">
           <ContextLink icon="plus" size="medium" color="dark" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
-            Baz
+            <NoteForm onChange={this.noop}>
+              <label className="u-fontSize--larger u-verticalSpacing--default">Create New Note</label>
+            </NoteForm>
           </ContextLink>
           <ContextLink user={this.props.user} size="medium" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
-            Qux
+            <ul className="u-textAlign--left">
+              <li className="listitem">
+                <a href="#" onClick={this.signout.bind(this)}>
+                  Sign Out
+                </a>
+              </li>
+            </ul>
           </ContextLink>
         </ul>
       </div>

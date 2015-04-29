@@ -15,6 +15,11 @@ module.exports = class App extends React.Component {
       isAuthed: this.props.isAuthed,
       isAuthenticating: false
     };
+    dispatcher.on('app:getState', this.getState.bind(this));
+  }
+
+  getState() {
+    dispatcher.emit('app:state', this.state);
   }
 
   onClick() {

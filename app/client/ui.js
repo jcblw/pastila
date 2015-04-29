@@ -49,6 +49,10 @@ module.exports = class UI {
     });
   }
 
+  onState(state) {
+    this.app.setState(state);
+  }
+
   update(type, ...args) {
     var handler = 'on' + ((type || '').split(':').map(UI.toUpperCase).join(''));
     if (typeof this[handler] !== 'function') {
