@@ -46,6 +46,14 @@
   text-align: right;
 }
 
+.u-position--right {
+  right: 0;
+}
+
+.u-position--absolute {
+  position: absolute;
+}
+
 /* font-size */
 
 .u-fontSize--smaller {

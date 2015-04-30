@@ -27,6 +27,10 @@ module.exports = class Gist extends Store {
     this.request(`gists:${id}`, `/gists/${id}`, callback);
   }
 
+  remove(id, callback) {
+    this.del(`/gists/${id}`, callback);
+  }
+
   create(gist, callback) {
     this.post('/gists', gist, (err, _gist) => {
       if (err) {
@@ -35,6 +39,10 @@ module.exports = class Gist extends Store {
       callback(err, _gist);
       this.setCache(`gists:${_gist.id}`, _gist);
     });
+  }
+
+  updateCache(callback) {
+    this.request('gists', `/users/${this.username}/gists`, callback, true);
   }
 
   update(id, gist, callback) {

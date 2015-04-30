@@ -20,9 +20,9 @@ module.exports = class Store {
       this._log.write(`main process [${Date.now()}] ${msg} \n\r`);
   }
 
-  request(type, endpoint, callback) {
+  request(type, endpoint, callback, refresh) {
     this.getCache(type, (err, resource) => {
-      if (err || !resource) {
+      if (err || !resource || refresh) {
         return this.requestHTTP({uri: endpoint}, (err, _resource) => {
           if (err) {
             return callback(err);
@@ -53,6 +53,13 @@ module.exports = class Store {
     this.requestHTTP({
       method: 'POST',
       body: payload,
+      uri: endpoint
+    }, callback);
+  }
+
+  del(endpoint, callback) {
+    this.requestHTTP({
+      method: 'DELETE',
       uri: endpoint
     }, callback);
   }

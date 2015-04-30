@@ -30,7 +30,6 @@ ipc.on('auth:error', function(err) {
   console.log(err);
 });
 
-
 window.onbeforeunload = function(e) {
   dispatcher.emit('app:getState');
   return false;
@@ -53,6 +52,7 @@ ipc.on('gist:get', function(gist){
 });
 dispatcher.on('gist:update', ipc.send.bind(ipc, 'gist:update'));
 dispatcher.on('gist:create', ipc.send.bind(ipc, 'gist:create'));
+dispatcher.on('gist:del', ipc.send.bind(ipc, 'gist:del'));
 
 
 ipc.on('app:initialState', function(state) {

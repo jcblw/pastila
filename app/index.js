@@ -10,6 +10,7 @@ var
   util = require('util'),
   qs = require('querystring'),
   fs = require('fs'),
+  dialog = require('dialog'),
   Pastila = require('./src/pastila'),
   dispatcher = require('./src/dispatcher'),
   levelup = require('levelup'),
@@ -50,13 +51,13 @@ ipc.on('auth:start', function(e) {
   });
 });
 
-ipc.on('gist:all', function(e) {
+ipc.on('gist:all', function (e, refresh) {
   pastila.gists.all(function(err, gists) {
     if (err) {
       return e.sender.send('store:error', 'gists:all');
     }
     e.sender.send('gist:all', gists);
-  } );
+  }, refresh);
 });
 
 ipc.on('gist:get', function(e, id) {
@@ -84,6 +85,37 @@ ipc.on('gist:create', function(e, content) {
       return e.sender.send('store:error', 'gists:create');
     }
     e.sender.send('gist:get', _gist);
+    pastila.gists.updateCache(function(err, _gists) {
+      if (err) {
+        return;
+      }
+      e.sender.send('gist:all', _gists);
+    });
+  });
+});
+
+ipc.on('gist:del', function(e, gist) {
+  var
+    files = Object.keys(gist.files),
+    warning = 'are you sure you want to remove ' +
+      files[0] +
+      '? This can not be undone.';
+
+  dialog.showMessageBox({
+    message: warning,
+    buttons: ['Delete', 'Cancel']
+  }, function(index) {
+    if (index) {
+      return;
+    }
+    pastila.gists.remove(gist.id, function(err, gist) {
+      pastila.gists.updateCache(function(err, _gists) {
+        if (err) {
+          return;
+        }
+        e.sender.send('gist:all', _gists);
+      });
+    });
   });
 });
 
@@ -103,6 +135,12 @@ ipc.on('app:getInitialState', function(e) {
         return;
       }
       e.sender.send('app:initialState', state);
+  });
+  pastila.gists.updateCache(function(err, _gists) {
+    if (err) {
+      return;
+    }
+    e.sender.send('gist:all', _gists);
   });
 });
 

@@ -8,7 +8,7 @@ module.exports = class Icon extends React.Component {
       className = `icon-${this.props.type} icon--${this.props.size} icon--${this.props.color} ${this.props.className}`;
 
     return (
-      <svg className={className} dangerouslySetInnerHTML={{__html: icon}}></svg>
+      <svg className={className} dangerouslySetInnerHTML={{__html: icon}} onClick={this.props.onClick}></svg>
     );
   }
 };

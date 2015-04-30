@@ -44,9 +44,6 @@ module.exports = class Notes extends React.Component {
         <ul className="list">
           <ContextLink icon="stacks" size="medium" color="dark" className='u-textAlign--center u-verticalSpacing--default'>
             <ul className="u-textAlign--left">
-              <li className="list-header">
-                Notes
-              </li>
               {list}
             </ul>
           </ContextLink>
