@@ -1,10 +1,12 @@
-![pastila logo](https://cloud.githubusercontent.com/assets/578259/16803/70834398-ec17-11e4-8ad0-3c2a3d702529.png)
+![pastila logo](./app/client/assets/pastila-logo-small.png)
 
 # Pastila App
 
 a app lets you takes notes via markdown and github gist.
 
 This is a small app built on [Electron](https://github.com/atom/electron). The client portion of the app is build in [React](https://facebook.github.io/react/index.html).
+
+![pastila logo](./app/client/assets/screenshot.png)
 
 ## Install
 
