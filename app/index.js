@@ -147,10 +147,15 @@ ipc.on('app:getInitialState', function(e) {
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 600,
-    height: 600
+    height: 600,
+    show: false
   });
   mainWindow.on('closed', function() {
     mainWindow = null;
+  });
+
+  mainWindow.webContents.on('did-finish-load', function() {
+    mainWindow.show();
   });
   // check auth on startup
   pastila.isAuthed(function(isAuthed) {
