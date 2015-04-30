@@ -1,3 +1,5 @@
+![pastila logo](https://cloud.githubusercontent.com/assets/578259/16803/70834398-ec17-11e4-8ad0-3c2a3d702529.png)
+
 # Pastila App
 
 a app lets you takes notes via markdown and github gist.
