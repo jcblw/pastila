@@ -23,7 +23,7 @@ var
   mainWindow,
   pastila;
 
-db = ttl(db); // invalidate cache every 15 minutes
+db = ttl(db);
 
 require('crash-reporter').start(); // report crashes
 
