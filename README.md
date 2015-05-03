@@ -1,4 +1,6 @@
-# <img src="./app/client/assets/pastila-logo.png" style="width:65px;height:65px;" alt="pastila logo"/> Pastila App
+![pastila logo](./app/client/assets/pastila-logo.png)
+
+# Pastila App
 
 a app lets you takes notes via markdown and github gist.
 
