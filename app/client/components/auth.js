@@ -15,7 +15,7 @@ module.exports = class AuthIframe extends React.Component {
       },
       query = {
         client_id: '4e73f807eaa53c1b7661',
-        scope: 'gist,user',
+        scope: 'gist',
         redirect_uri: 'http://localhost:5678/'
       },
       url = 'https://github.com/login/oauth/authorize?' + qs.stringify(query);
