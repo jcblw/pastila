@@ -26,6 +26,20 @@ npm install
 npm start
 ```
 
-## Dev
+## Making a build
 
-So for install dependecies for your Electron app you need to install those in the `app/` directory. If you are trying to use a native module right now you can do this by doing `MODULE=module_name npm run nativeinstall`. This is not yet fully tested tho.
+If your developing on the app, and are saving data into the app when creating a build all that data will be transfered to the newly created app. Sometimes this is fine. 
+
+### Basic build
+
+```shell
+npm run build
+```
+
+### Clean Build
+
+> If you are developing something and have not commited it yet, beware of clean builds it runs `git clean -xdf` and will remove any files not tracked yet. This is good tho so there is no left over data in the app.
+
+```shell
+npm run cleanbuild
+```
