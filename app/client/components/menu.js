@@ -47,7 +47,7 @@ module.exports = class Notes extends React.Component {
               {list}
             </ul>
           </ContextLink>
-          <ContextLink icon="pen" size="medium" color="dark" className={penClassName}>
+          <ContextLink icon="pen" size="medium" color="dark" className={penClassName} onChange={this.noop}>
             <NoteForm note={this.props.note} onChange={this.noop}></NoteForm>
           </ContextLink>
         </ul>

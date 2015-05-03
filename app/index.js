@@ -54,7 +54,7 @@ app.on('ready', function() {
   });
 
   pastila.setWindow(mainWindow);
-  shortcuts.attach(mainWindow);
+  //shortcuts.attach(mainWindow);
 
   mainWindow.on('closed', function() {
     mainWindow = null;

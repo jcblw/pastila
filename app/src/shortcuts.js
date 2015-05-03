@@ -4,9 +4,7 @@ const
   dispatcher = require('./dispatcher'),
   globalShortcuts = require('global-shortcut'),
   shortcuts = { // this should be moved eventually
-    'CmdOrCtrl+o': 'ui:open',
-    'CmdOrCtrl+s': 'ui:forcesave',
-    'CmdOrCtrl+n': 'ui:new'
+    // right now this does nothing
   };
 
 function attach(shortcut, eventName) {

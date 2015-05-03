@@ -25,7 +25,7 @@ var
           type: 'separator'
         },
         {
-          label: 'Hide Electron',
+          label: 'Hide Pastila',
           accelerator: 'CmdOrCtrl+H',
           selector: 'hide:'
         },
@@ -53,14 +53,23 @@ var
       submenu: [
         {
           label: 'New Note',
+          accelerator: 'CmdOrCtrl+n',
           click: function() {
             dispatcher.emit('ui:new');
           }
         },
         {
           label: 'Open Note',
+          accelerator: 'CmdOrCtrl+o',
           click: function() {
             dispatcher.emit('ui:open');
+          }
+        },
+        {
+          label: 'Save Note',
+          accelerator: 'CmdOrCtrl+s',
+          click: function() {
+            dispatcher.emit('ui:forcesave');
           }
         }
       ]
@@ -68,11 +77,6 @@ var
     {
       label: 'View',
       submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'CmdOrCtrl+R',
-          click: function() { BrowserWindow.getFocusedWindow().reloadIgnoringCache(); }
-        },
         {
           label: 'Toggle DevTools',
           accelerator: 'Alt+CmdOrCtrl+I',
