@@ -14,6 +14,9 @@ module.exports = class ContextLink extends React.Component {
       id: this.props.icon || this.props.user
     };
     dispatcher.on('contextlink:close', this.onContextOpening.bind(this));
+    if (options.eventTrigger) {
+      dispatcher.on(options.eventTrigger, this.open.bind(this));
+    }
   }
 
   onContextOpening(id) {
@@ -31,13 +34,17 @@ module.exports = class ContextLink extends React.Component {
     e.stopPropagation();
   }
 
-  onClickOpen(e) {
-    e.stopPropagation();
+  open() {
     this.setState({
       isOpen: this.state.isOpen ? false : true,
       opening: true
     });
     dispatcher.emit('contextlink:close', this.state.id);
+  }
+
+  onClickOpen(e) {
+    e.stopPropagation();
+    this.open();
   }
 
   getLink() {

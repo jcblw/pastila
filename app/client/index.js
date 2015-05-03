@@ -61,11 +61,13 @@ ipc.on('gist:get', function(gist){
 dispatcher.on('gist:update', ipc.send.bind(ipc, 'gist:update'));
 dispatcher.on('gist:create', ipc.send.bind(ipc, 'gist:create'));
 dispatcher.on('gist:del', ipc.send.bind(ipc, 'gist:del'));
-
-
 ipc.on('app:initialState', function(state) {
   ui.update('state', state);
 });
+
+ipc.on('ui:open', dispatcher.emit.bind(dispatcher, 'ui:open'));
+ipc.on('ui:forcesave', dispatcher.emit.bind(dispatcher, 'ui:forcesave'));
+ipc.on('ui:new', dispatcher.emit.bind(dispatcher, 'ui:new'));
 
 // set this up after handlers are attached
 ui = new UI(query);

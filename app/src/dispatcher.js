@@ -137,6 +137,20 @@ class Dispatcher extends EventEmitter {
           e.sender.send('gist:all', _gists);
         });
       });
+
+      // this probably can be abstracted
+      this.on('ui:open', function(){
+        mainWindow.webContents.send('ui:open');
+      });
+
+      this.on('ui:forcesave', function(){
+        mainWindow.webContents.send('ui:forcesave');
+      });
+
+      this.on('ui:new', function(){
+        mainWindow.webContents.send('ui:new');
+      });
+
     }
 }
 

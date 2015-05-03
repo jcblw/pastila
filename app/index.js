@@ -13,6 +13,8 @@ var
   levelup = require('levelup'),
   ttl = require('level-ttl'),
   path = require('path'),
+  menu = require('./src/menu'),
+  shortcuts = require('./src/shortcuts'),
   logPath = path.resolve(__dirname, 'pastila-session.log'),
   log = fs.createWriteStream(logPath),
   dbPath = path.resolve(__dirname, '.pastila'),
@@ -37,6 +39,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
 
+  menu.setup();
 
   mainWindow = new BrowserWindow({
     width: 600,
@@ -49,7 +52,9 @@ app.on('ready', function() {
     db: db,
     mainWindow: mainWindow
   });
+
   pastila.setWindow(mainWindow);
+  shortcuts.attach(mainWindow);
 
   mainWindow.on('closed', function() {
     mainWindow = null;

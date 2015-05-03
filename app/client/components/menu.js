@@ -42,7 +42,7 @@ module.exports = class Notes extends React.Component {
     return (
       <div className="menu pure-menu u-padding--default" style={this.props.style}>
         <ul className="list">
-          <ContextLink icon="stacks" size="medium" color="dark" className='u-textAlign--center u-verticalSpacing--default'>
+          <ContextLink icon="stacks" size="medium" color="dark" className='u-textAlign--center u-verticalSpacing--default' eventTrigger="ui:open">
             <ul className="u-textAlign--left">
               {list}
             </ul>
@@ -52,7 +52,7 @@ module.exports = class Notes extends React.Component {
           </ContextLink>
         </ul>
         <ul className="list list--bottom">
-          <ContextLink icon="plus" size="medium" color="dark" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
+          <ContextLink icon="plus" size="medium" color="dark" bottom={true} className="u-textAlign--center u-verticalSpacing--default" eventTrigger="ui:new">
             <NoteForm onChange={this.noop}>
               <label className="u-fontSize--larger u-verticalSpacing--default">Create New Note</label>
             </NoteForm>
