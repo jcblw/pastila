@@ -24,6 +24,10 @@
   margin-right: 20px;
 }
 
+.u-marginRight--smaller {
+  margin-right: 10px;
+}
+
 .u-verticalSpacing--small {
   margin-bottom: 5px;
 }
@@ -62,4 +66,14 @@
 
 .u-fontSize--larger {
   font-size: 1.2em;
+}
+
+/* layout */
+
+.u-layout--centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  height: 100%;
 }

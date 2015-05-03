@@ -14,5 +14,6 @@
   "trailing" : true,
   "es3": false,
   "strict" : true,
-  "latedef": "nofunc"
+  "latedef": "nofunc",
+  "unused": true
 }

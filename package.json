@@ -7,7 +7,8 @@
     "start": "electron app/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd app && npm install",
-    "build": "rm -rf Pastila.app && atom-shell-packager app/ Pastila"
+    "cleanbuild": "git clean -xdf && npm install && npm run build",
+    "build": "rm -rf Pastila.app && electron-packager app/ Pastila --icon=assets/icon.icns"
   },
   "keywords": [
     "electron"
@@ -15,7 +16,7 @@
   "author": "Jacob Lowe",
   "license": "MIT",
   "devDependencies": {
-    "atom-shell-packager": "git+ssh://git@github.com:jcblw/atom-shell-packager.git#master",
+    "electron-packager": "^3.1.0",
     "electron-prebuilt": "^0.24.0"
   }
 }

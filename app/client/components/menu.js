@@ -57,7 +57,7 @@ module.exports = class Notes extends React.Component {
               <label className="u-fontSize--larger u-verticalSpacing--default">Create New Note</label>
             </NoteForm>
           </ContextLink>
-          <ContextLink user={this.props.user} size="medium" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
+          <ContextLink icon="settings" size="medium" bottom={true} className="u-textAlign--center u-verticalSpacing--default">
             <ul className="u-textAlign--left">
               <li className="listitem">
                 <a href="#" onClick={this.signout.bind(this)}>

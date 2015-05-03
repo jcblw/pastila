@@ -1,9 +1,7 @@
 'use strict';
 
 const
-  request = require('request'),
-  qs = require('querystring'),
-  levelup = require('levelup');
+  request = require('request');
 
 module.exports = class Store {
 

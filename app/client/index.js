@@ -26,11 +26,19 @@ ipc.on('auth:success', function(auth) {
   dispatcher.emit('gist:all');
 });
 
-ipc.on('auth:error', function(err) {
-  console.log(err);
+dispatcher.on('auth:signout', function() {
+  ipc.send('auth:signout');
 });
 
-window.onbeforeunload = function(e) {
+ipc.on('auth:signout', function() {
+  ui.update('auth:signout');
+});
+
+ipc.on('auth:error', function(err) {
+  console.log(err); // temp
+});
+
+window.onbeforeunload = function() {
   dispatcher.emit('app:getState');
   return false;
 };

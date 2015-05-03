@@ -20,6 +20,13 @@ module.exports = class UI {
     });
   }
 
+  onAuthSignout() {
+    this.app.setState({
+      isAuthenticating: false,
+      isAuthed: false
+    });
+  }
+
   onAuthError(state) {
     this.app.setState({
       isAuthenticating: false,

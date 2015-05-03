@@ -1,8 +1,7 @@
 const
   Gist = require('./stores/gist'),
   Auth = require('./stores/auth'),
-  User = require('./stores/user'),
-  dispatcher = require('./dispatcher');
+  User = require('./stores/user');
 
 module.exports = class Pastila {
 
@@ -10,6 +9,10 @@ module.exports = class Pastila {
     this.db = options.db;
     this.log = options.log;
     this.auth = new Auth(options);
+  }
+
+  setWindow(window) {
+    this.mainWindow = window;
   }
 
   setupResources(auth, callback) {
@@ -23,6 +26,13 @@ module.exports = class Pastila {
       this.gists = new Gist(this);
       callback();
     });
+  }
+
+  saveState(state, callback) {
+    state.position = this.mainWindow.getPosition();
+    state.size = this.mainWindow.getSize();
+    console.log(state);
+    this.db.put('state', state, callback);
   }
 
   isAuthed(callback) {
