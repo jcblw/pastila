@@ -64,7 +64,7 @@ module.exports = class Gist extends Store {
     const
       files = Object.keys(gist.files),
       file = files[0];
-    return !!file.match(/\.md$/);
+    return file ? !!file.match(/\.md$/) : false;
   }
 
 };

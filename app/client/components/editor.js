@@ -95,9 +95,10 @@ module.exports = React.createClass({
     editor.setOption('readOnly', nextProps.readOnly);
     editor.setOption('highlightActiveLine', nextProps.highlightActiveLine);
     editor.setShowPrintMargin(nextProps.setShowPrintMargin);
-    if (this.editor.getValue() !== nextProps.value) {
-      this.editor.setValue(nextProps.value, -1);
+    if (editor.getValue() !== nextProps.value) {
+      editor.setValue(nextProps.value, -1);
       this.setState({value: nextProps.value});
+      session.setUndoManager(new (ace.UndoManager)());
     }
     if (nextProps.onLoad) {
       nextProps.onLoad(this.editor);

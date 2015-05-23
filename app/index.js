@@ -14,7 +14,6 @@ var
   ttl = require('level-ttl'),
   path = require('path'),
   menu = require('./src/menu'),
-  shortcuts = require('./src/shortcuts'),
   logPath = path.resolve(__dirname, 'pastila-session.log'),
   log = fs.createWriteStream(logPath),
   dbPath = path.resolve(__dirname, '.pastila'),
