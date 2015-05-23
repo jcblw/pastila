@@ -9,17 +9,34 @@ module.exports = class EditNoteForm extends React.Component {
     super(options);
     const note = this.props.note;
     this.state = {
-      fileName: this.getFileName(),
+      fileName: this.getFileName(note),
       description: note ? note.description: ''
     };
   }
 
-  getFileName() {
+  componentWillReceiveProps(props) {
+    const note = props.note;
+    if (note) {
+      this.setState({
+        fileName: this.getFileName(note),
+        description: note ? note.description: ''
+      });
+    }
+  }
+
+  shouldComponentUpdate(props) {
+    return !!props.note;
+  }
+
+  getFileName(note) {
+
+    if (!note) {
+      note = {};
+    }
+
     const
-      note = this.props.note || {},
       files = note.files || {},
       fileNames = Object.keys(files);
-
     return fileNames[0];
   }
 
@@ -46,15 +63,15 @@ module.exports = class EditNoteForm extends React.Component {
         fileNames = Object.keys(files);
 
       if (this.state.fileName !== fileNames[0]) {
-        files[this.state.fileName] = files[fileNames[0]]; // transfer data to new file name
+        files[this.state.fileName] = {
+          content: files[fileNames[0]].content
+        }; // transfer data to new file name
         files[fileNames[0]] = null; // set old file to null eqv of deleting
       }
 
       payload.files = files;
       payload.description = this.state.description;
-
-      console.log(payload);
-      return; //dispatcher.emit('gist:update', this.props.note.id, payload);
+      return dispatcher.emit('gist:update', this.props.note.id, payload);
     }
 
     const
@@ -76,21 +93,19 @@ module.exports = class EditNoteForm extends React.Component {
 
   render() {
     const
-      note = this.props.note || {},
-      fileName = this.getFileName(),
       cta = this.props.cta || 'Submit',
       onFieldChange = this.onFieldChange.bind(this);
     return (
-      <form onChange={this.props.onChange} onSubmit={this.onSubmitForm.bind(this)} className="form-block u-textAlign--left">
+      <form onSubmit={this.onSubmitForm.bind(this)} className="form-block u-textAlign--left">
         {this.props.children}
         <div className="input-group u-verticalSpacing--default">
           <label className="input-group--label u-verticalSpacing--small">File Name</label>
-          <input name="fileName" className="input-group--input" type="text" value={fileName} onChange={onFieldChange} />
+          <input name="fileName" className="input-group--input" type="text" value={this.state.fileName} onChange={onFieldChange} />
           <small className="input-group--small">File name will be suffixed with .md</small>
         </div>
         <div className="input-group u-verticalSpacing--default">
           <label className="input-group--label u-verticalSpacing--small">Description</label>
-          <textarea name="description" className="input-group--input" type="text" value={note.description} onChange={onFieldChange}></textarea>
+          <textarea name="description" className="input-group--input" type="text" value={this.state.description} onChange={onFieldChange}></textarea>
         </div>
         <div className="input-group u-textAlign--right">
           <button className="btn btn-primary">{cta}</button>
