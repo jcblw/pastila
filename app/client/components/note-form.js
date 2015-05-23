@@ -24,10 +24,6 @@ module.exports = class EditNoteForm extends React.Component {
     }
   }
 
-  shouldComponentUpdate(props) {
-    return !!props.note;
-  }
-
   getFileName(note) {
 
     if (!note) {
@@ -89,6 +85,10 @@ module.exports = class EditNoteForm extends React.Component {
     };
 
     dispatcher.emit('gist:create', payload);
+    this.setState({
+      fileName: '',
+      description: ''
+    });
   }
 
   render() {
