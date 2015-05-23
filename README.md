@@ -10,6 +10,8 @@ This is a small app built on [Electron](https://github.com/atom/electron). The c
 
 ## Install
 
+You will need to be running something `>=0.12.0 node` or `iojs` to install the deps due to the native modules.
+
 ```shell
 git clone git@github.com:jcblw/pastila.git
 ```
