@@ -24,6 +24,7 @@ module.exports = class App extends React.Component {
 
   onClick() {
     dispatcher.emit('contextlink:close');
+    dispatcher.emit('editor:focus');
   }
 
   render () {

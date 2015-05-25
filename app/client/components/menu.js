@@ -7,14 +7,21 @@ const
 
 module.exports = class Notes extends React.Component {
 
-  getNodeList () {
+  constructor() {
+    super();
+    dispatcher.on('focus', this.focusItem.bind(this));
+  }
+
+  noop() {}
+
+  getNodeList() {
     const
       notes = this.props.notes || [],
       nodes = {};
 
-    notes.forEach((note) => {
+    notes.forEach((note, index) => {
       nodes[note.id] = (
-        <NoteItem note={note} />
+        <NoteItem note={note} ref={"note" + index }/>
       );
     });
 
@@ -27,7 +34,14 @@ module.exports = class Notes extends React.Component {
     return React.addons.createFragment(nodes);
   }
 
-  noop() {}
+  focusItem(id) {
+    if (id === 'noteList') {
+      let item = React.findDOMNode(this.refs.note0);
+      if (item && typeof item.focus === 'function') {
+        item.children[0].focus();
+      }
+    }
+  }
 
   signout() {
     dispatcher.emit('auth:signout');
@@ -42,18 +56,18 @@ module.exports = class Notes extends React.Component {
     return (
       <div className="menu pure-menu u-padding--default" style={this.props.style}>
         <ul className="list">
-          <ContextLink icon="stacks" size="medium" color="dark" className='u-textAlign--center u-verticalSpacing--default' eventTrigger="ui:open">
+          <ContextLink icon="stacks" size="medium" color="dark" className='u-textAlign--center u-verticalSpacing--default' eventTrigger="ui:open" focusId="noteList">
             <ul className="u-textAlign--left">
               {list}
             </ul>
           </ContextLink>
-          <ContextLink icon="pen" size="medium" color="dark" className={penClassName} onChange={this.noop}>
-            <NoteForm note={this.props.note} onChange={this.noop}></NoteForm>
+          <ContextLink icon="pen" size="medium" color="dark" className={penClassName} onChange={this.noop} focusId="editForm">
+            <NoteForm note={this.props.note} onChange={this.noop} id="editForm"></NoteForm>
           </ContextLink>
         </ul>
         <ul className="list list--bottom">
-          <ContextLink icon="plus" size="medium" color="dark" bottom={true} className="u-textAlign--center u-verticalSpacing--default" eventTrigger="ui:new">
-            <NoteForm onChange={this.noop}>
+          <ContextLink icon="plus" size="medium" color="dark" bottom={true} className="u-textAlign--center u-verticalSpacing--default" eventTrigger="ui:new" focusId="newForm">
+            <NoteForm onChange={this.noop} id="newForm">
               <label className="u-fontSize--larger u-verticalSpacing--default">Create New Note</label>
             </NoteForm>
           </ContextLink>

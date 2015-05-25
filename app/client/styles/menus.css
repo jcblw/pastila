@@ -60,6 +60,11 @@
   padding: 0;
 }
 
+.contextLink--container ul li {
+  margin: 0 -20px;
+  padding: 0;
+}
+
 .contextLink--container ul li.list-header {
   font-size: 1.1em;
   font-weight: 700;
@@ -79,6 +84,14 @@
   text-decoration: none;
   display: block;
   padding: 10px 20px;
+}
+
+.contextLink--container ul li a:focus {
+  outline: none;
+}
+
+.contextLink--container ul li a:focus svg{
+  fill: #a4fff2;
 }
 
 .contextLink--container ul li a:hover {

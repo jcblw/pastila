@@ -12,6 +12,7 @@ module.exports = class EditNoteForm extends React.Component {
       fileName: this.getFileName(note),
       description: note ? note.description: ''
     };
+    dispatcher.on('focus', this.focusForm.bind(this));
   }
 
   componentWillReceiveProps(props) {
@@ -47,6 +48,15 @@ module.exports = class EditNoteForm extends React.Component {
     payload[name] = value;
     this.setState(payload);
     dispatcher.emit('form:update', this.state);
+  }
+
+  focusForm(id) {
+    if (this.props.id === id) {
+      let input = React.findDOMNode(this.refs.fileName);
+      if (input && typeof input.focus === 'function') {
+        input.focus();
+      }
+    }
   }
 
   onSubmitForm(e) {
@@ -100,7 +110,7 @@ module.exports = class EditNoteForm extends React.Component {
         {this.props.children}
         <div className="input-group u-verticalSpacing--default">
           <label className="input-group--label u-verticalSpacing--small">File Name</label>
-          <input name="fileName" className="input-group--input" type="text" value={this.state.fileName} onChange={onFieldChange} />
+          <input name="fileName" className="input-group--input" type="text" value={this.state.fileName} onChange={onFieldChange} ref="fileName" />
           <small className="input-group--small">File name will be suffixed with .md</small>
         </div>
         <div className="input-group u-verticalSpacing--default">

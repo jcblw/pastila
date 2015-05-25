@@ -3,7 +3,8 @@
 const
   ace = require('brace'),
   React = require('react'),
-  _ = require('lodash');
+  _ = require('lodash'),
+  dispatcher = require('../dispatcher');
 
 require('brace/theme/github');
 require('brace/theme/textmate');
@@ -28,6 +29,7 @@ module.exports = React.createClass({
     showPrintMargin : React.PropTypes.bool
   },
   getInitialState() {
+    dispatcher.on('editor:focus', this.focusEditor.bind(this));
     return {
       value: this.props.value
     };
@@ -104,7 +106,11 @@ module.exports = React.createClass({
       nextProps.onLoad(this.editor);
     }
   },
-
+  focusEditor() {
+    if (this.editor && typeof this.editor.focus === 'function') {
+      this.editor.focus();
+    }
+  },
   render() {
     const
       divStyle = {

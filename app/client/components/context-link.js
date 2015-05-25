@@ -42,6 +42,12 @@ module.exports = class ContextLink extends React.Component {
     dispatcher.emit('contextlink:close', this.state.id);
   }
 
+  componentDidUpdate() {
+    if (this.state.isOpen === true) {
+      dispatcher.emit('focus', this.props.focusId);
+    }
+  }
+
   onClickOpen(e) {
     e.stopPropagation();
     this.open();

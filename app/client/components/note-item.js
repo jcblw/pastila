@@ -6,7 +6,7 @@ const
 
 module.exports = class NoteItem extends React.Component {
 
-  loadNote(e) {
+  loadNote() {
     dispatcher.emit('contextlink:close');
     dispatcher.emit('gist:get', this.props.note.id);
   }
@@ -16,13 +16,20 @@ module.exports = class NoteItem extends React.Component {
     dispatcher.emit('gist:del', this.props.note);
   }
 
+  onKeypress(e) {
+    debugger;
+    if (e.keycode === 38) { // up
+      debugger;
+    }
+  }
+
   render() {
     const
       note = this.props.note,
       files = Object.keys(note.files);
     return (
       <li className="listitem">
-        <a href="#" onClick={this.loadNote.bind(this)} data-id={note.id}>
+        <a href="#" onClick={this.loadNote.bind(this)} data-id={note.id} onKeyPress={this.onKeypress.bind(this)}>
           <Icon type="doc" size="small" color="dark" className="u-marginRight--default"></Icon>
           {files[0]}
           <Icon type="x" size="small" color="dark" className="u-marginRight--default u-position--absolute u-position--right" onClick={this.onDelClick.bind(this)}></Icon>
