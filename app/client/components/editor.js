@@ -71,6 +71,8 @@ module.exports = React.createClass({
     });
     session.setMode('ace/mode/'+this.props.mode);
     session.setUseWrapMode(true);
+    session.setTabSize(2);
+    session.setUseSoftTabs(true);
     editor.setTheme('ace/theme/'+this.props.theme);
     editor.setFontSize(this.props.fontSize);
     editor.on('change', this.onChange);
