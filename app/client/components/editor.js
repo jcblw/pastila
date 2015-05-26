@@ -78,6 +78,7 @@ module.exports = React.createClass({
     editor.on('change', this.onChange);
     editor.setValue(this.props.value, -1);
     editor.renderer.setShowGutter(this.props.showGutter);
+    editor.setOption('scrollPastEnd', 0.7);
     editor.setOption('maxLines', this.props.maxLines);
     editor.setOption('readOnly', this.props.readOnly);
     editor.setOption('highlightActiveLine', this.props.highlightActiveLine);
