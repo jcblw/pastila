@@ -32,10 +32,6 @@ body, html {
   top: 20px;
 }
 
-.ace_scrollbar-v {
-  right: -10px;
-}
-
 * {
   box-sizing: border-box;
 }
