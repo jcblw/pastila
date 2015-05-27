@@ -49,7 +49,7 @@ module.exports = class Notes extends React.Component {
       );
 
     return (
-      <div className='workspace u-padding--default' style={this.props.style}>
+      <div className='workspace' style={this.props.style}>
         {editor}
       </div>
     );
