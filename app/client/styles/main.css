@@ -11,13 +11,11 @@ body, html {
   height: 100%;
   min-height: 100%;
   overflow: hidden;
-  background: white;
+  background: #fcfcfc;
   margin: 0;
   color: #7a7a7a;
   font-family: osaka-mono!important;
 }
-
-body, html { background: #fcfcfc; }
 
 #brace-editor {
   line-height: 1.3;
