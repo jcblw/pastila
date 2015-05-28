@@ -71,6 +71,16 @@ var
           click: function() {
             dispatcher.emit('ui:forcesave');
           }
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+c',
+          selector: 'copy:'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+v',
+          selector: 'paste:'
         }
       ]
     },
