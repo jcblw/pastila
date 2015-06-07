@@ -1,11 +1,11 @@
 'use strict';
 
-var
+const
   Menu = require('menu'),
   app = require('app'),
   dispatcher = require('./dispatcher'),
+  shell = require('shell'),
   BrowserWindow = require('browser-window'),
-  menu,
   template = [
     {
       label: 'Pastila',
@@ -24,11 +24,11 @@ var
         {
           type: 'separator'
         },
-        {
-          label: 'Hide Pastila',
-          accelerator: 'CmdOrCtrl+H',
-          selector: 'hide:'
-        },
+        // {
+        //   label: 'Hide Pastila',
+        //   accelerator: 'CmdOrCtrl+H',
+        //   selector: 'hide:'
+        // },
         {
           label: 'Hide Others',
           accelerator: 'CmdOrCtrl+Shift+H',
@@ -49,28 +49,40 @@ var
       ]
     },
     {
-      label: 'File',
+      label: 'Edit',
       submenu: [
         {
-          label: 'New Note',
-          accelerator: 'CmdOrCtrl+n',
-          click: function() {
-            dispatcher.emit('ui:new');
-          }
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          selector: 'undo:'
         },
         {
-          label: 'Open Note',
-          accelerator: 'CmdOrCtrl+o',
-          click: function() {
-            dispatcher.emit('ui:open');
-          }
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          selector: 'redo:'
         },
         {
-          label: 'Save Note',
-          accelerator: 'CmdOrCtrl+s',
-          click: function() {
-            dispatcher.emit('ui:forcesave');
-          }
+          type: 'separator'
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          selector: 'cut:'
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          selector: 'copy:'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          selector: 'paste:'
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          selector: 'selectAll:'
         }
       ]
     },
@@ -108,9 +120,16 @@ var
     },
     {
       label: 'Help',
-      submenu: []
+      submenu: [
+        {
+          label: 'What is Markdown?',
+          click: function() {
+            shell.openExternal('https://help.github.com/articles/markdown-basics/');
+          }
+        }
+      ]
     },
-  ];
+  ],
   menu = Menu.buildFromTemplate(template);
 
 module.exports.setup = function() {
