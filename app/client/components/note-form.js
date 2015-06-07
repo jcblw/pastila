@@ -106,7 +106,7 @@ module.exports = class EditNoteForm extends React.Component {
       cta = this.props.cta || 'Submit',
       onFieldChange = this.onFieldChange.bind(this);
     return (
-      <form onSubmit={this.onSubmitForm.bind(this)} className="form-block u-textAlign--left">
+      <form onSubmit={this.onSubmitForm.bind(this)} className="form-block form--createGist u-textAlign--left">
         {this.props.children}
         <div className="input-group u-verticalSpacing--default">
           <label className="input-group--label u-verticalSpacing--small">File Name</label>
