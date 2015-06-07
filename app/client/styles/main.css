@@ -35,14 +35,11 @@ body, html {
 }
 
 @media (max-width: 767px) {
-  #brace-editor {
-    font-size: 17px !important;
-  }
+  #brace-editor { font-size: 17px !important; }
 }
 
-.ace-kuroir .ace_markup.ace_heading {
-  background-color: transparent !important;
-}
+.ace-kuroir .ace_markup.ace_heading { background-color: transparent !important; }
+.ace-kuroir .ace_comment { background-color: transparent !important; }
 
 .ace_scroller {
   top: 20px !important;
