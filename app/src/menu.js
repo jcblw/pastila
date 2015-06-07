@@ -81,6 +81,11 @@ var
           label: 'Paste',
           accelerator: 'CmdOrCtrl+v',
           selector: 'paste:'
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+x',
+          selector: 'cut:'
         }
       ]
     },
