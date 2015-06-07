@@ -7,7 +7,8 @@ const
   dispatcher = require('../dispatcher');
 
 require('brace/theme/github');
-require('brace/theme/textmate');
+// require('brace/theme/textmate');
+require('brace/theme/kuroir');
 require('brace/mode/markdown');
 
 
@@ -38,7 +39,8 @@ module.exports = React.createClass({
     return {
       name   : 'brace-editor',
       mode   : 'markdown',
-      theme  : 'textmate',
+      theme  : 'kuroir',
+      // theme: 'textmate',
       height : '100%',
       width  : '100%',
       value  : '',

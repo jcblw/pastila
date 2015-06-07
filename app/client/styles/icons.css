@@ -19,3 +19,11 @@
 .icon--light {
   fill: #f2f2f2;
 }
+
+.icon-x {
+  fill-opacity: 0.3;
+}
+
+.icon-x:hover {
+  fill-opacity: 0.75;
+}
