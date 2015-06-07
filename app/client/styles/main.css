@@ -19,6 +19,16 @@ body, html {
 
 /* Ace Editor Customization */
 
+::-webkit-scrollbar,
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+  opacity: 0;
+}
+
 #brace-editor {
   line-height: 1.3;
   background: #fcfcfc;
@@ -28,8 +38,10 @@ body, html {
   background-color: transparent !important;
 }
 
-.ace_content {
-  top: 20px;
+.ace_scroller {
+  top: 20px !important;
+  overflow: visible !important;
+
 }
 
 * {
