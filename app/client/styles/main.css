@@ -34,6 +34,12 @@ body, html {
   background: #fcfcfc;
 }
 
+@media (max-width: 767px) {
+  #brace-editor {
+    font-size: 17px !important;
+  }
+}
+
 .ace-kuroir .ace_markup.ace_heading {
   background-color: transparent !important;
 }
