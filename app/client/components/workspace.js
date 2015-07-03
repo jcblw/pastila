@@ -18,6 +18,7 @@ module.exports = class Notes extends React.Component {
         fileNames = Object.keys(this.props.note.files),
         note = this.props.note.files[fileNames[0]];
 
+      dispatcher.emit('title:update', fileNames[0]);
       return note.content;
     }
 

@@ -49,8 +49,6 @@ module.exports = class UI {
   }
 
   onGistGet(state) {
-    var fileNames = Object.keys(state.files);
-    document.title = fileNames[0];
     this.app.setState({
       note: state
     });

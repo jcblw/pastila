@@ -21,6 +21,10 @@ dispatcher.on('auth:start', function() {
   ipc.send('auth:start');
 });
 
+dispatcher.on('title:update', function(str) {
+  window.document.title = str;
+});
+
 ipc.on('auth:success', function(auth) {
   ui.update('auth:success', auth);
   dispatcher.emit('gist:all');
