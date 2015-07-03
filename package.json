@@ -1,6 +1,6 @@
 {
   "name": "pastila",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "a electron a that takes notes via markdown and github gist.",
   "main": "index.js",
   "scripts": {
