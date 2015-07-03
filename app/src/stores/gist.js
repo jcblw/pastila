@@ -1,7 +1,8 @@
 'use strict';
 
 const
-  Store = require('./store');
+  Store = require('./store'),
+  _ = require('lodash');
 
 module.exports = class Gist extends Store {
 
@@ -17,9 +18,11 @@ module.exports = class Gist extends Store {
 
   parse(data) {
     if (Array.isArray(data)) {
-      return data.filter(Gist.markdownOnly);
+      return data
+        .filter(Gist.markdownOnly)
+        .map(Gist.parseResponse);
     }
-    return data;
+    return Gist.parseResponse(data);
   }
 
   get(id, callback) {
@@ -65,6 +68,10 @@ module.exports = class Gist extends Store {
       files = Object.keys(gist.files),
       file = files[0];
     return file ? !!file.match(/\.md$/) : false;
+  }
+
+  static parseResponse(resp) {
+    return _.pick(resp, 'files', 'id', 'description');
   }
 
 };
