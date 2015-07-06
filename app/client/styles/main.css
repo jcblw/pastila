@@ -27,6 +27,8 @@ body, html {
 ::-webkit-scrollbar-corner,
 ::-webkit-resizer {
   opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 #brace-editor {

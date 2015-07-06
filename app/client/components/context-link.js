@@ -56,11 +56,11 @@ module.exports = class ContextLink extends React.Component {
   getLink() {
     if (this.props.icon) {
       return (
-        <Icon type={this.props.icon} color="dark" size="medium"></Icon>
+        <Icon className="menu-icon" type={this.props.icon} color="dark" size="medium"></Icon>
       );
     } else {
       return (
-        <Avatar src={this.props.user} size="medium"></Avatar>
+        <Avatar className="menu-avatar" src={this.props.user} size="medium"></Avatar>
       );
     }
   }
@@ -73,7 +73,7 @@ module.exports = class ContextLink extends React.Component {
       link = this.getLink();
 
     return (
-      <li className={this.props.className}>
+      <li className={`${this.props.className} ${this.state.isOpen ? 'is-active ' : ' '}`}>
         <span onClick={this.onClickOpen.bind(this)}>{link}</span>
         <div className={className} onClick={this.onContextClick.bind(this)}>
           {this.props.children}

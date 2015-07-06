@@ -6,9 +6,14 @@ const
   dispatcher = require('./dispatcher');
 
 module.exports = class UI {
+
   constructor(props) {
-    this.app = new React.render(<App isAuthed={props.isAuthed} />, document.body);
-    if (props.isAuthed) {
+    this.isAuthed = props.isAuthed;
+    this.app = new React.render(<App isAuthed={this.isAuthed} />, document.body);
+  }
+
+  start() {
+    if (this.isAuthed) {
       dispatcher.emit('gist:all');
     }
   }

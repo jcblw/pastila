@@ -49,6 +49,32 @@ const
       ]
     },
     {
+      label: 'File',
+      submenu: [
+        {
+          label: 'New Note',
+          accelerator: 'CmdOrCtrl+n',
+          click: function() {
+            dispatcher.emit('ui:new');
+          }
+        },
+        {
+          label: 'Open Note',
+          accelerator: 'CmdOrCtrl+o',
+          click: function() {
+            dispatcher.emit('ui:open');
+          }
+        },
+        {
+          label: 'Save Note',
+          accelerator: 'CmdOrCtrl+s',
+          click: function() {
+            dispatcher.emit('ui:forcesave');
+          }
+        }
+      ]
+    },
+    {
       label: 'Edit',
       submenu: [
         {

@@ -8,7 +8,6 @@
   border-radius: 4px;
 }
 
-.input-group--input:hover,
 .input-group--input:active,
 .input-group--input:focus {
   border-color: #a4fff2;
