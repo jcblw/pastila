@@ -24,11 +24,11 @@ const
         {
           type: 'separator'
         },
-        // {
-        //   label: 'Hide Pastila',
-        //   accelerator: 'CmdOrCtrl+H',
-        //   selector: 'hide:'
-        // },
+        {
+          label: 'Hide Pastila',
+          accelerator: 'CmdOrCtrl+H',
+          selector: 'hide:'
+        },
         {
           label: 'Hide Others',
           accelerator: 'CmdOrCtrl+Shift+H',
