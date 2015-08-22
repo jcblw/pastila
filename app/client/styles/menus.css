@@ -17,17 +17,7 @@
 }
 
 .menu-icon {
-  transition: all .3s;
-}
-
-.menu-icon:hover {
   cursor: pointer;
-  transform: translateX(2px);
-}
-
-.is-active .menu-icon {
-  fill: #a4fff2;
-  transform: translateX(0);
 }
 
 .menu .list.list--bottom {
@@ -35,8 +25,22 @@
   bottom: 0;
 }
 
-.menu .list li {
+.menu .list {
   position: relative;
+}
+
+.menu .list .menu-icon {
+  border-radius: 50%;
+  overflow: visible;
+}
+
+.menu .list .menu-icon:hover {
+  cursor: pointer;
+  background: white;
+}
+
+.menu .list .is-active .menu-icon {
+  background: #a4fff2;
 }
 
 .contextLink--container {
@@ -98,7 +102,7 @@
   padding: 10px 50px 10px 20px;
   overflow: hidden;
   text-overflow: ellipsis;
-  
+
 }
 
 .contextLink--container ul li a:focus {
