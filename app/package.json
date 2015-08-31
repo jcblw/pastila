@@ -15,5 +15,8 @@
     "react-ace": "^1.1.7",
     "request": "^2.55.0",
     "through2": "^0.6.5"
+  },
+  "devDependencies": {
+    "gaze": "^0.5.1"
   }
 }

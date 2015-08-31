@@ -31,7 +31,6 @@ module.exports = class Pastila {
   saveState(state, callback) {
     state.position = this.mainWindow.getPosition();
     state.size = this.mainWindow.getSize();
-    console.log(state);
     this.db.put('state', state, callback);
   }
 

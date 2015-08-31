@@ -30,6 +30,9 @@ class Dispatcher extends EventEmitter {
     startListening(options) {
       const {pastila, db, mainWindow} = options;
       this.pastila = options.pastila;
+      this.mainWindow = mainWindow;
+      // this need to be handled in a way that switching
+      // out the main window does not effect the bindings
       ipc.on('auth:start', this.handleAuth.bind(this));
       ipc.on('gist:all', function (e, refresh) {
         pastila.gists.all(function(err, gists) {
@@ -114,16 +117,16 @@ class Dispatcher extends EventEmitter {
         pastila.saveState(state, app.quit.bind(app));
       });
 
-      ipc.on('app:getInitialState', function(e) {
-        db.get('state', function(err, state) {
+      ipc.on('app:getInitialState', (e) => {
+        db.get('state', (err, state) => {
             if (err) {
               return;
             }
-            if (state.position && mainWindow) {
-              mainWindow.setPosition(...state.position);
+            if (state.position && this.mainWindow) {
+              this.mainWindow.setPosition(...state.position);
             }
-            if (state.size && mainWindow) {
-              mainWindow.setSize(...state.size);
+            if (state.size && this.mainWindow) {
+              this.mainWindow.setSize(...state.size);
             }
             e.sender.send('app:initialState', state);
         });
@@ -139,18 +142,22 @@ class Dispatcher extends EventEmitter {
       });
 
       // this probably can be abstracted
-      this.on('ui:open', function(){
-        mainWindow.webContents.send('ui:open');
+      this.on('ui:open', () => {
+        this.mainWindow.webContents.send('ui:open');
       });
 
-      this.on('ui:forcesave', function(){
-        mainWindow.webContents.send('ui:forcesave');
+      this.on('ui:forcesave', () => {
+        this.mainWindow.webContents.send('ui:forcesave');
       });
 
-      this.on('ui:new', function(){
-        mainWindow.webContents.send('ui:new');
+      this.on('ui:new', () => {
+        this.mainWindow.webContents.send('ui:new');
       });
 
+    }
+
+    setMainWindow(mainWindow) {
+      this.mainWindow = mainWindow;
     }
 }
 

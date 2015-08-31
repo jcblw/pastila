@@ -32,42 +32,47 @@ pastila = new Pastila({
   log: log
 });
 
-app.on('window-all-closed', function() {
-  app.quit();
-});
+// app.on('window-all-closed', function() {
+//   app.quit();
+// });
 
-app.on('ready', function() {
-
-  menu.setup();
-
-  mainWindow = new BrowserWindow({
+function createMainWindow() {
+  const _window = new BrowserWindow({
     width: 600,
     height: 600,
     show: false
   });
 
-  dispatcher.startListening({
-    pastila: pastila,
-    db: db,
-    mainWindow: mainWindow
+  pastila.setWindow(_window);
+  dispatcher.setMainWindow(_window);
+
+  _window.webContents.on('did-finish-load', function() {
+    if (mainWindow) {
+      _window.showInactive();
+      mainWindow.destroy();
+    } else {
+      _window.show();
+    }
+    mainWindow = _window;
   });
 
-  pastila.setWindow(mainWindow);
-  //shortcuts.attach(mainWindow);
-
-  mainWindow.on('closed', function() {
-    mainWindow = null;
-  });
-
-  mainWindow.webContents.on('did-finish-load', function() {
-    mainWindow.show();
-  });
   // check auth on startup
   pastila.isAuthed(function(isAuthed) {
     var query = {};
     if (isAuthed) {
       query.isAuthed = isAuthed;
     }
-    mainWindow.loadUrl('file://' + __dirname + '/index.html?' + qs.stringify(query));
+    _window.loadUrl('file://' + __dirname + '/index.html?' + qs.stringify(query));
   });
+}
+
+dispatcher.startListening({
+  pastila: pastila,
+  db: db
+});
+
+app.on('ready', function() {
+  menu.setup();
+  createMainWindow();
+  require('./src/development')(path.resolve(__dirname, 'client/**/*'), mainWindow, createMainWindow);
 });
