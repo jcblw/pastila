@@ -1,18 +1,15 @@
+'use strict';
+
 const
-  React = require('react/addons'),
+  React = require('react'),
   Menu = require('./menu'),
-  Workspace = require('./workspace'),
-  dispatcher = require('../dispatcher');
+  Workspace = require('./workspace');
 
-module.exports = class Notes extends React.Component {
-
-  render() {
-
-    return (
-      <div className="notes-container">
-        <Menu notes={this.props.notes} note={this.props.note}></Menu>
-        <Workspace note={this.props.note}></Workspace>
-      </div>
-    );
-  }
+module.exports = (props) => {
+  return (
+    <div className="notes-container">
+      <Menu notes={props.notes} note={props.note}></Menu>
+      <Workspace note={props.note}></Workspace>
+    </div>
+  );
 };

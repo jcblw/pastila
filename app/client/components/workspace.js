@@ -1,6 +1,5 @@
 const
-  React = require('react/addons'),
-  NoteItem = require('./note-item'),
+  React = require('react'),
   Editor = require('./editor'),
   dispatcher = require('../dispatcher'),
   _ = require('lodash');

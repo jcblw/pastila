@@ -1,15 +1,15 @@
+'use strict';
+
 const
   React = require('react');
 
-module.exports = class Icon extends React.Component {
-  render () {
-    const
-      pathto = this.props.pathto || 'client/assets/icons.svg',
-      icon = `<use xlink:href="${pathto}#icon-${this.props.type}"></use>`,
-      className = `icon-${this.props.type} icon--${this.props.size} icon--${this.props.color} ${this.props.className}`;
+module.exports = (props) => {
+  const
+    pathto = props.pathto || 'client/assets/icons.svg',
+    icon = `<use xlink:href="${pathto}#icon-${props.type}"></use>`,
+    className = `icon-${props.type} icon--${props.size} icon--${props.color} ${props.className}`;
 
-    return (
-      <svg className={className} dangerouslySetInnerHTML={{__html: icon}} onClick={this.props.onClick}></svg>
-    );
-  }
+  return (
+    <svg className={className} dangerouslySetInnerHTML={{__html: icon}} onClick={props.onClick}></svg>
+  );
 };

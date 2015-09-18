@@ -2,6 +2,7 @@
 
 const
   React = require('react'),
+  ReactDOM = require('react-dom'),
   App = require('./components/app'),
   dispatcher = require('./dispatcher');
 
@@ -9,7 +10,7 @@ module.exports = class UI {
 
   constructor(props) {
     this.isAuthed = props.isAuthed;
-    this.app = new React.render(<App isAuthed={this.isAuthed} />, document.body);
+    this.app = new ReactDOM.render(<App isAuthed={this.isAuthed} />, document.getElementById('pastila'));
   }
 
   start() {

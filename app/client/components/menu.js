@@ -1,5 +1,7 @@
 const
-  React = require('react/addons'),
+  React = require('react'),
+  ReactDOM = require('react-dom'),
+  createFragment = require('react-addons-create-fragment'),
   NoteItem = require('./note-item'),
   ContextLink = require('./context-link'),
   NoteForm = require('./note-form'),
@@ -31,12 +33,12 @@ module.exports = class Notes extends React.Component {
       );
     }
 
-    return React.addons.createFragment(nodes);
+    return createFragment(nodes);
   }
 
   focusItem(id) {
     if (id === 'noteList') {
-      let item = React.findDOMNode(this.refs.note0);
+      let item = ReactDOM.findDOMNode(this.refs.note0);
       if (item && typeof item.focus === 'function') {
         item.children[0].focus();
       }

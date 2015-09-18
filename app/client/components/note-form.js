@@ -1,5 +1,6 @@
 const
   React = require('react'),
+  ReactDOM = require('react-dom'),
   dispatcher = require('../dispatcher'),
   _ = require('lodash');
 
@@ -52,7 +53,7 @@ module.exports = class EditNoteForm extends React.Component {
 
   focusForm(id) {
     if (this.props.id === id) {
-      let input = React.findDOMNode(this.refs.fileName);
+      let input = ReactDOM.findDOMNode(this.refs.fileName);
       if (input && typeof input.focus === 'function') {
         input.focus();
       }

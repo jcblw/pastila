@@ -7,7 +7,7 @@
 @import url(./avatars.css);
 @import url(./states.css);
 
-body, html {
+body, html, #pastila {
   height: 100%;
   min-height: 100%;
   overflow: hidden;

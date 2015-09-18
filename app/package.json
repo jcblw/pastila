@@ -11,8 +11,10 @@
     "leveldown": "^0.10.4",
     "levelup": "^0.19.0",
     "lodash": "^3.8.0",
-    "react": "^0.13.1",
+    "react": "^0.14.0-rc1",
     "react-ace": "^1.1.7",
+    "react-addons-create-fragment": "^0.14.0-rc1",
+    "react-dom": "^0.14.0-rc1",
     "request": "^2.55.0",
     "through2": "^0.6.5"
   },
