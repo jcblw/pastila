@@ -16,6 +16,10 @@
   position: relative;
 }
 
+.menu .list > li {
+  position: relative;
+}
+
 .menu-icon {
   cursor: pointer;
 }
@@ -29,26 +33,20 @@
   position: relative;
 }
 
-.menu .list .menu-icon {
-  border-radius: 50%;
-  overflow: visible;
-}
+.menu .list .menu-icon {}
 
 .menu .list .menu-icon:hover {
   cursor: pointer;
   background: white;
 }
 
-.menu .list .is-active .menu-icon {
-  background: #a4fff2;
-}
+.menu .list .is-active .menu-icon {}
 
 .contextLink--container {
   position: absolute;
   top: 0;
   left: 70px;
   background: #fff;
-  border-radius: 4px;
   display: none;
   padding: 20px;
   box-shadow: 0px 1px 3px rgba(0,0,0,.3);
@@ -89,6 +87,7 @@
 }
 
 .contextLink--container ul li:last-child {
+  margin-bottom: -20px;
 }
 
 .contextLink--container ul li:last-child a {

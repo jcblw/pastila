@@ -22,6 +22,10 @@
   font-size: .7em;
 }
 
+.form-block {
+  margin-top: -20px;
+}
+
 .form-block input,
 .form-block label,
 .form-block textarea {
