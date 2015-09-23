@@ -1,15 +1,13 @@
 'use strict';
 
-const
-  React = require('react');
+const React = require('react');
+const styles = require('../styles/avatars');
 
 module.exports = (props) => {
-  var styles = {
-      backgroundImage: `url(https://pbs.twimg.com/profile_images/544039728463351808/NkoRdBBL.png)`
-    },
-    className = `avatar avatar--${props.size} avatar--rounded`;
+  const bg = {backgroundImage: `url(${props.url})`};
+  const avatarSize = styles[props.size];
 
   return (
-    <div className={className} style={styles}></div>
+    <div style={[styles.base, styles.rounded, avatarSize, bg]}></div>
   );
 };

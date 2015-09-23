@@ -1,16 +1,13 @@
 'use strict';
 
-const
-  ace = require('brace'),
-  React = require('react'),
-  _ = require('lodash'),
-  dispatcher = require('../dispatcher');
+const ace = require('brace');
+const React = require('react');
+const _ = require('lodash');
+const dispatcher = require('../dispatcher');
 
 require('brace/theme/github');
-// require('brace/theme/textmate');
 require('brace/theme/kuroir');
 require('brace/mode/markdown');
-
 
 module.exports = React.createClass({
   propTypes: {
@@ -64,9 +61,9 @@ module.exports = React.createClass({
     }
   },
   componentDidMount() {
-    const
-      editor = this.editor = ace.edit(this.props.name),
-      session = editor.getSession();
+    const editor = this.editor = ace.edit(this.props.name);
+    const session = editor.getSession();
+
     editor.$blockScrolling = Infinity;
     editor.setOptions({
       fontFamily: 'osaka-mono'
@@ -123,7 +120,7 @@ module.exports = React.createClass({
         height: this.props.height
       };
     return (
-      <div id={this.props.name} onChange={_.debounce(_.bind(this.onChange, this), 500)} style={divStyle}>
+      <div id={this.props.name} onChange={_.debounce(this.onChange, 500)} style={divStyle}>
       </div>
     );
   }

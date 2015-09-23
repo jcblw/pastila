@@ -1,9 +1,11 @@
+'use strict';
 
-const
-  React = require('react'),
-  Icon = require('./icon'),
-  Avatar = require('./avatar'),
-  dispatcher = require('../dispatcher');
+const React = require('react');
+const Icon = require('./icon');
+const Avatar = require('./avatar');
+const dispatcher = require('../dispatcher');
+const menuStyles = require('../styles/menu');
+const contextLinkStyles = require('../styles/context-link');
 
 module.exports = class ContextLink extends React.Component {
 
@@ -56,24 +58,29 @@ module.exports = class ContextLink extends React.Component {
   getLink() {
     if (this.props.icon) {
       return (
-        <Icon className="menu-icon" type={this.props.icon} color="dark" size="medium"></Icon>
+        <Icon style={menuStyles.icon} type={this.props.icon} color="dark" size="medium"></Icon>
       );
     } else {
       return (
-        <Avatar className="menu-avatar" src={this.props.user} size="medium"></Avatar>
+        <Avatar style={menuStyles.avatar} src={this.props.user} size="medium"></Avatar>
       );
     }
   }
 
   render() {
-    const
-      className = (this.state.isOpen ? 'is-open ' : ' ') +
-        (this.props.bottom ? 'contextLink--bottom ' : ' ') +
-        'contextLink--container',
-      link = this.getLink();
+    const styles = [contextLinkStyles.base];
+    const link = this.getLink();
+    if (this.state.isOpen) {
+      styles.push(contextLinkStyles.open);
+    }
+
+    if (this.props.bottom) {
+      styles.push(contextLinkStyles.bottom);
+    }
+
 
     return (
-      <li className={`${this.props.className} ${this.state.isOpen ? 'is-active ' : ' '}`}>
+      <li style={styles}>
         <span onClick={this.onClickOpen.bind(this)}>{link}</span>
         <div className={className} onClick={this.onContextClick.bind(this)}>
           {this.props.children}
