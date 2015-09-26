@@ -7,6 +7,8 @@
     "brace": "^0.5.1",
     "codemirror": "^5.2.0",
     "eventemitter2": "^0.4.14",
+    "flux": "^2.1.1",
+    "is-electron-renderer": "^2.0.0",
     "level-ttl": "^3.0.3",
     "leveldown": "^1.4.1",
     "levelup": "^1.2.1",

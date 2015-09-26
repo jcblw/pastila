@@ -1,57 +1,55 @@
-const
-  React = require('react'),
-  Editor = require('./editor'),
-  dispatcher = require('../dispatcher'),
-  _ = require('lodash');
+'use strict'
+
+const React = require('react')
+const Editor = require('./editor')
+const GistActions = require('../../actions/gist')
+const _ = require('lodash')
 
 module.exports = class Notes extends React.Component {
 
-  constructor(options) {
-    super(options);
-    this.onFileChange = _.debounce(this.onFileChange.bind(this), 2000);
+  constructor (options) {
+    super(options)
+    this.onFileChange = _.debounce(this.onFileChange.bind(this), 2000)
   }
 
-  getContent() {
+  getContent () {
     if (this.props.note) {
-      var
-        fileNames = Object.keys(this.props.note.files),
-        note = this.props.note.files[fileNames[0]];
+      const fileNames = Object.keys(this.props.note.files)
+      const note = this.props.note.files[fileNames[0]]
 
-      dispatcher.emit('title:update', fileNames[0]);
-      return note.content;
+      // dispatcher.emit('title:update', fileNames[0])
+      return note.content
     }
 
-    return 'Open a note by clicking a note in the sidebar';
+    return 'Open a note by clicking a note in the sidebar'
   }
 
-  onFileChange(content, id) {
+  onFileChange (content, id) {
     if (this.props.note) {
-      var fileNames = Object.keys(this.props.note.files);
+      const fileNames = Object.keys(this.props.note.files)
       if (this.props.note.id !== id || this.props.note.files[fileNames[0]].content === content) {
-        return;
+        return
       }
-      this.props.note.files[fileNames[0]].content = content;
-      dispatcher.emit('gist:update', this.props.note.id, this.props.note);
+      this.props.note.files[fileNames[0]].content = content
+      GistActions.update(this.props.note.id, this.props.note)
     }
   }
 
-  render() {
-    var
-      content = this.getContent(),
-      id = this.props.note ? this.props.note.id : 'startup',
-      editor = (
-        <Editor
-          id={id}
-          value={content}
-          onChange={this.onFileChange}
-          onLoad={this.onFileChange.cancel}>
-        </Editor>
-      );
+  render () {
+    const content = this.getContent()
+    const id = this.props.note ? this.props.note.id : 'startup'
+    const editor = (
+      <Editor
+        id={id}
+        value={content}
+        onChange={this.onFileChange}
+        onLoad={this.onFileChange.cancel} />
+    )
 
     return (
       <div className='workspace' style={this.props.style}>
         {editor}
       </div>
-    );
+    )
   }
-};
+}
