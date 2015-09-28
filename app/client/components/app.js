@@ -9,6 +9,7 @@ const AppConstants = require('../../constants/app')
 const UserConstants = require('../../constants/user')
 const GistConstants = require('../../constants/gist')
 const GistActions = require('../../actions/gist')
+const AppActions = require('../../actions/app')
 
 module.exports = class App extends React.Component {
 
@@ -19,13 +20,19 @@ module.exports = class App extends React.Component {
       isAuthenticating: false
     }
     dispatcher.register((action) => {
-      switch (action.actionType) {
+      switch (action.action) {
+        case AppConstants.APP_INITIAL_STATE:
+          this.setState(action.state)
+          break
         case AppConstants.APP_STATE_GET:
           this.getState()
           break
         case AppConstants.APP_CHANGED:
           this.render()
           break
+        case UserConstants.AUTH_START:
+            this.onAuthStart()
+            break
         case UserConstants.AUTH_SUCCESS:
           this.onAuthSuccess()
           break
@@ -48,8 +55,9 @@ module.exports = class App extends React.Component {
     })
 
     // startup app
+    AppActions.getInitialState()
     if (this.state.isAuthed) {
-      GistActions.all()
+      GistActions.all() // attempt to update cache
     }
   }
 
@@ -65,6 +73,7 @@ module.exports = class App extends React.Component {
       isAuthenticating: false,
       isAuthed: true
     })
+    GistActions.all()
   }
 
   onAuthSignout () {
@@ -91,7 +100,7 @@ module.exports = class App extends React.Component {
 
   onClick () {
     // need to figure out good way to do this
-    // dispatcher.emit('contextlink:close');
+    AppActions.clearView()
     // dispatcher.emit('editor:focus');
   }
 
@@ -102,7 +111,7 @@ module.exports = class App extends React.Component {
   }
 
   onGistAllReturn (gists) {
-    this.app.setState({
+    this.setState({
       notes: gists
     })
   }

@@ -5,6 +5,8 @@ const ipc = require('ipc')
 const isRenderer = require('is-electron-renderer')
 let processAction = 'main:action'
 let externalAction = 'renderer:action'
+let sender = ipc
+let lb = '\n\r'
 
 // this allows our dispatcher to talk through differnt processes\
 if (isRenderer) {
@@ -13,13 +15,20 @@ if (isRenderer) {
 }
 
 dispatcher.register((action) => {
+  console.info(`${lb}sending${processAction} to ${externalAction}${lb} ${action.action}${lb} renderer: ${isRenderer}${lb} isTranfered: ${action._transfered_}`)
   if (!action._transfered_) {
     action._transfered_ = true
-    ipc.send(externalAction, action) // dispatch to main process
+    sender.send(externalAction, action) // dispatch to main process
   }
 })
 
-ipc.on(processAction, (action) => { // catch a dispatch from the main process
+ipc.on(processAction, (event, action) => { // catch a dispatch from the main process
+  if (!isRenderer) {
+    sender = event.sender
+  } else {
+    action = event
+  }
+  console.info(`${lb}broadcasting ${processAction}${lb} ${action.action}${lb} renderer: ${isRenderer}`)
   dispatcher.dispatch(action)
 })
 

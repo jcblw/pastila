@@ -24,9 +24,24 @@ module.exports = class App extends Store {
     this.db.put('state', state, this.noop)
   }
 
+  getInitialState () {
+    this.db.get('state', (err, state) => {
+      if (err) {
+        return AppActions.error(err)
+      }
+      if (state.position && this.mainWindow) {
+        this.mainWindow.setPosition(...state.position)
+      }
+      if (state.size && this.mainWindow) {
+        this.mainWindow.setSize(...state.size)
+      }
+      AppActions.sendInitialState(state)
+    })
+  }
+
   getEvents () {
     return {
-      [constants.APP_INITIAL_STATE]: this.getState.bind(this),
+      [AppConstants.APP_GET_INITIAL_STATE]: this.getInitialState.bind(this),
       [AppConstants.APP_SET_STATE]: this.saveState.bind(this)
     }
   }

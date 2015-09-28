@@ -6,6 +6,7 @@ const createFragment = require('react-addons-create-fragment')
 const NoteItem = require('./note-item')
 const ContextLink = require('./context-link')
 const NoteForm = require('./note-form')
+const UserActions = require('../../actions/user')
 // const dispatcher = require('../../src/dispatcher')
 
 module.exports = class Notes extends React.Component {
@@ -46,7 +47,7 @@ module.exports = class Notes extends React.Component {
   }
 
   signout () {
-    // dispatcher.emit('auth:signout')
+    UserActions.logout()
   }
 
   render () {

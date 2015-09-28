@@ -13,6 +13,7 @@ module.exports = class Pastila {
     this.clienID = options.clientID
     this.serverLocation = options.serverLocation
     this.user = new User(this)
+    this._app = new App(this)
   }
 
   setWindow (window) {

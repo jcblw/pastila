@@ -20,10 +20,21 @@ class AppActions extends Base {
     this.dispatcher.dispatch({action: constants.APP_STATE_GET})
   }
 
-  initialState (onState) {
+  getInitialState (onState) {
+    this.dispatcher.dispatch({action: constants.APP_GET_INITIAL_STATE})
+  }
+
+  sendInitialState (state) {
     this.dispatcher.dispatch({
       action: constants.APP_INITIAL_STATE,
-      onState: onState
+      state: state
+    })
+  }
+
+  clearView (id) {
+    this.dispatcher.dispatch({
+      action: constants.APP_CLEAR_VIEW,
+      id: id
     })
   }
 

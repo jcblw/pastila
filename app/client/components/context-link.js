@@ -3,7 +3,9 @@
 const React = require('react')
 const Icon = require('./icon')
 const Avatar = require('./avatar')
-// const dispatcher = require('../../src/dispatcher')
+const dispatcher = require('../../src/dispatcher')
+const AppConstants = require('../../constants/app')
+const AppActions = require('../../actions/app')
 
 module.exports = class ContextLink extends React.Component {
 
@@ -11,11 +13,8 @@ module.exports = class ContextLink extends React.Component {
     super(options)
     this.state = {
       isOpen: false,
-      id: this.props.icon || this.props.user
-    }
-    // dispatcher.on('contextlink:close', this.onContextOpening.bind(this));
-    if (options.eventTrigger) {
-      // dispatcher.on(options.eventTrigger, this.open.bind(this))
+      id: this.props.icon || this.props.user,
+      eventTrigger: options.eventTrigger
     }
   }
 
@@ -35,17 +34,35 @@ module.exports = class ContextLink extends React.Component {
   }
 
   open () {
+    AppActions.clearView(this.state.id)
     this.setState({
-      isOpen: this.state.isOpen,
+      isOpen: !this.state.isOpen,
       opening: true
     })
-    // dispatcher.emit('contextlink:close', this.state.id)
   }
 
   componentDidUpdate () {
     if (this.state.isOpen === true) {
       // dispatcher.emit('focus', this.props.focusId)
     }
+  }
+
+  componentWillMount () {
+    this.dispatcherToken = dispatcher.register((action) => {
+      if (action.action === AppConstants.APP_CLEAR_VIEW) {
+        this.onContextOpening(action.id)
+      }
+
+      if (action.action === AppConstants.APP_EVENT_TRIGGER) {
+        if (action.eventTrigger === this.state.eventTrigger) {
+          this.open()
+        }
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    dispatcher.unregister(this.dispatcherToken)
   }
 
   onClickOpen (e) {
@@ -73,7 +90,7 @@ module.exports = class ContextLink extends React.Component {
 
     return (
       <li className={`${this.props.className} ${this.state.isOpen ? 'is-active ' : ' '}`}>
-        <span onClick={this.onClickOpen.bind(this)}>{link}</span>
+        <span onClick={(e) => this.onClickOpen(e)}>{link}</span>
         <div className={className} onClick={this.onContextClick.bind(this)}>
           {this.props.children}
         </div>

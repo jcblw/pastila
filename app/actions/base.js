@@ -8,6 +8,10 @@ class Actions {
   setDispatcher (dispatcher) {
     this.dispatcher = dispatcher
   }
+
+  error (err) {
+    console.error(err)
+  }
 }
 
 module.exports = Actions

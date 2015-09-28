@@ -5,7 +5,6 @@ const BrowserWindow = require('browser-window')
 const qs = require('querystring')
 const fs = require('fs')
 const Pastila = require('./pastila')
-const dispatcher = require('./dispatcher')
 const levelup = require('levelup')
 const ttl = require('level-ttl')
 const path = require('path')
@@ -13,6 +12,7 @@ const menu = require('./menu')
 const logPath = path.resolve(__dirname, 'pastila-session.log')
 const log = fs.createWriteStream(logPath)
 const dbPath = path.resolve(__dirname, '.pastila')
+const development = !!process.env.DEBUG_PASTILA
 let db = levelup(dbPath, {valueEncoding: 'json'})
 let mainWindow
 let pastila
@@ -50,6 +50,11 @@ function createMainWindow () {
   // check auth on startup
   pastila.isAuthed(function (isAuthed) {
     const query = {}
+
+    if (development) {
+      query.debug = true
+    }
+
     if (isAuthed) {
       query.isAuthed = isAuthed
     }
@@ -60,9 +65,11 @@ function createMainWindow () {
 app.on('ready', function () {
   menu.setup()
   createMainWindow()
-  require('./development')(
-    path.resolve(__dirname, '../client/**/*'),
-    mainWindow,
-    createMainWindow
-  )
+  if (development) {
+    require('./development')(
+      path.resolve(__dirname, '../client/**/*'),
+      mainWindow,
+      createMainWindow
+    )
+  }
 })
