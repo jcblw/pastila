@@ -25,6 +25,7 @@ module.exports = class Pastila {
 
   setWindow (window) {
     this.mainWindow = window
+    this._app.mainWindow = window
   }
 
   setupResources (auth, callback) {

@@ -73,10 +73,8 @@ module.exports = class App extends React.Component {
   }
 
   getState () {
-    dispatcher.dispatch({
-      action: AppConstants.APP_STATE,
-      state: this.state
-    })
+    AppActions.state(this.state)
+    AppActions.closeWindow()
   }
 
   onAuthSuccess () {

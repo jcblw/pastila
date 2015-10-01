@@ -11,7 +11,7 @@ class AppActions extends Base {
 
   state (state) {
     this.dispatcher.dispatch({
-      action: constants.APP_STATE,
+      action: constants.APP_SET_STATE,
       state: state
     })
   }
@@ -47,6 +47,17 @@ class AppActions extends Base {
       action: constants.APP_EVENT_TRIGGER,
       eventTrigger: eventTrigger
     })
+  }
+
+  setTitle (title) {
+    this.dispatcher.dispatch({
+      action: constants.APP_UPDATE_TITLE,
+      title: title
+    })
+  }
+
+  closeWindow () {
+    this.dispatcher.dispatch({action: constants.APP_CLOSE_WINDOW})
   }
 
 }

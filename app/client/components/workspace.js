@@ -3,6 +3,7 @@
 const React = require('react')
 const Editor = require('./editor')
 const GistActions = require('../../actions/gist')
+const AppActions = require('../../actions/app')
 const _ = require('lodash')
 
 module.exports = class Notes extends React.Component {
@@ -16,8 +17,7 @@ module.exports = class Notes extends React.Component {
     if (this.props.note) {
       const fileNames = Object.keys(this.props.note.files)
       const note = this.props.note.files[fileNames[0]]
-
-      // dispatcher.emit('title:update', fileNames[0])
+      AppActions.setTitle(fileNames[0])
       return note.content
     }
 
