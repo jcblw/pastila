@@ -53,6 +53,9 @@ module.exports = class App extends React.Component {
         case GistConstants.GIST_ALL_RETURNED:
           this.onGistAllReturn(action.gists)
           break
+        case GistConstants.GIST_DELETE:
+          this.checkIfCurrentDeleted(action.id)
+          break
       }
     })
 
@@ -70,6 +73,14 @@ module.exports = class App extends React.Component {
       return GistActions.all()
     }
     this._dispatcherTimer = setTimeout(this.getAllGist, 500)
+  }
+
+  checkIfCurrentDeleted(id) {
+    if (this.state.note.id === id) {
+      this.setState({note: null})
+      AppActions.clearView()
+      AppActions.setTitle('Pastila')
+    }
   }
 
   getState () {
@@ -116,6 +127,8 @@ module.exports = class App extends React.Component {
     this.setState({
       note: gist
     })
+    AppActions.clearView()
+    AppActions.focusEditor()
   }
 
   onGistAllReturn (gists) {

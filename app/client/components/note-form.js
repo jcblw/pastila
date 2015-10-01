@@ -46,7 +46,6 @@ module.exports = class EditNoteForm extends React.Component {
 
     payload[name] = value
     this.setState(payload)
-    // dispatcher.emit('form:update', this.state)
   }
 
   focusForm (id) {
@@ -76,7 +75,7 @@ module.exports = class EditNoteForm extends React.Component {
 
       payload.files = files
       payload.description = this.state.description
-      GistActions.update(this.props.note.id, payload)
+      return GistActions.update(this.props.note.id, payload)
     }
 
     const name = this.state.fileName.trim()
@@ -88,7 +87,7 @@ module.exports = class EditNoteForm extends React.Component {
     }
 
     payload.files[fileName] = {
-      content: '. '
+      content: '# New Note'
     }
 
     GistActions.create(payload)
