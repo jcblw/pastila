@@ -6,6 +6,7 @@ const Avatar = require('./avatar')
 const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
 const AppActions = require('../../actions/app')
+const {autobind} = require('core-decorators')
 
 module.exports = class ContextLink extends React.Component {
 
@@ -29,6 +30,7 @@ module.exports = class ContextLink extends React.Component {
     })
   }
 
+  @autobind
   onContextClick (e) {
     e.stopPropagation()
   }
@@ -65,6 +67,7 @@ module.exports = class ContextLink extends React.Component {
     dispatcher.unregister(this.dispatcherToken)
   }
 
+  @autobind
   onClickOpen (e) {
     e.stopPropagation()
     this.open()
@@ -90,8 +93,8 @@ module.exports = class ContextLink extends React.Component {
 
     return (
       <li className={`${this.props.className} ${this.state.isOpen ? 'is-active ' : ' '}`}>
-        <span onClick={(e) => this.onClickOpen(e)}>{link}</span>
-        <div className={className} onClick={this.onContextClick.bind(this)}>
+        <span onClick={this.onClickOpen}>{link}</span>
+        <div className={className} onClick={this.onContextClick}>
           {this.props.children}
         </div>
       </li>

@@ -38,6 +38,10 @@ class AppActions extends Base {
     })
   }
 
+  focusEditor () {
+    this.dispatcher.dispatch({action: constants.APP_EDITOR_FOCUS})
+  }
+
 }
 
 module.exports = new AppActions()

@@ -103,7 +103,6 @@ module.exports = class Store {
     const _events = this.getEvents()
     dispatcher.register((action) => {
       for (let key in _events) {
-        console.info(`\n\r Checking ${action.action} against ${key}`)
         if (action.action === key && typeof _events[key] === 'function') {
           _events[key](action)
         }

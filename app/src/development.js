@@ -4,7 +4,7 @@ const gaze = require('gaze')
 const BrowserWindow = require('browser-window')
 
 module.exports = function (dir = '', mainWindow = {}, factory = function () {}) {
-  console.log('starting up development mode for', dir)
+  console.log(`starting up development mode for ${dir}`)
   BrowserWindow
     .addDevToolsExtension('devtools/react-devtools/shells/chrome')
   gaze(dir, function (err) {
@@ -13,8 +13,6 @@ module.exports = function (dir = '', mainWindow = {}, factory = function () {}) 
     }
 
     this.on('changed', function (filePath) {
-      console.log('File changed', filePath)
-      // window factory
       factory()
     })
   })

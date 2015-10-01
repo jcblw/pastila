@@ -4,6 +4,7 @@ const Store = require('./store')
 const _ = require('lodash')
 const GistConstants = require('../constants/gist')
 const GistActions = require('../actions/gist')
+const {autobind} = require('core-decorators')
 
 module.exports = class Gist extends Store {
 
@@ -12,6 +13,7 @@ module.exports = class Gist extends Store {
     this.username = options.username
   }
 
+  @autobind
   all (action) {
     const {refresh} = action
     this.log(`gist::all - getting gist for user ${this.username}`)
@@ -23,6 +25,7 @@ module.exports = class Gist extends Store {
     }, refresh)
   }
 
+  @autobind
   parse (data) {
     if (Array.isArray(data)) {
       return data
@@ -32,6 +35,7 @@ module.exports = class Gist extends Store {
     return Gist.parseResponse(data)
   }
 
+  @autobind
   get (action) {
     this.log(`gist::get - getting gist ${action.id}`)
     this.request(`gists:${action.id}`, `/gists/${action.id}`, (err, gist) => {
@@ -42,6 +46,7 @@ module.exports = class Gist extends Store {
     })
   }
 
+  @autobind
   remove (action) {
     const {id} = action
     this.del(`/gists/${id}`, (err) => {
@@ -52,6 +57,7 @@ module.exports = class Gist extends Store {
     })
   }
 
+  @autobind
   create (action) {
     const {gist} = action
     this.post('/gists', gist, (err, _gist) => {
@@ -68,6 +74,7 @@ module.exports = class Gist extends Store {
     this.request('gists', `/users/${this.username}/gists`, callback, true)
   }
 
+  @autobind
   update (action) {
     const {id, gist} = action
     const payload = {
@@ -88,11 +95,11 @@ module.exports = class Gist extends Store {
 
   getEvents () {
     return {
-      [GistConstants.GISTS_ALL]: this.all.bind(this),
-      [GistConstants.GIST_GET]: this.get.bind(this),
-      [GistConstants.GIST_UPDATE]: this.update.bind(this),
-      [GistConstants.GIST_CREATE]: this.create.bind(this),
-      [GistConstants.GIST_DELETE]: this.remove.bind(this)
+      [GistConstants.GISTS_ALL]: this.all,
+      [GistConstants.GIST_GET]: this.get,
+      [GistConstants.GIST_UPDATE]: this.update,
+      [GistConstants.GIST_CREATE]: this.create,
+      [GistConstants.GIST_DELETE]: this.remove
     }
   }
 

@@ -3,6 +3,8 @@
 const Gist = require('../stores/gist')
 const App = require('../stores/app')
 const User = require('../stores/user')
+const dispatcher = require('./dispatcher')
+const UserConstants = require('../constants/user')
 
 module.exports = class Pastila {
 
@@ -14,6 +16,11 @@ module.exports = class Pastila {
     this.serverLocation = options.serverLocation
     this.user = new User(this)
     this._app = new App(this)
+    dispatcher.register((action) => {
+      if (action.action === UserConstants.AUTH_SUCCESS) {
+        return this.isAuthed(() => {}) // cheap way to setup resources
+      }
+    })
   }
 
   setWindow (window) {

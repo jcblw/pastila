@@ -17,10 +17,8 @@ let db = levelup(dbPath, {valueEncoding: 'json'})
 let mainWindow
 let pastila
 
-db = ttl(db)
-
 require('crash-reporter').start() // report crashes
-
+db = ttl(db)
 pastila = new Pastila({
   db: db,
   clientId: '4e73f807eaa53c1b7661',

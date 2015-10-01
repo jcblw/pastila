@@ -66,12 +66,6 @@ class GistActions extends Base {
     })
   }
 
-  error (err) {
-    this.dispatcher.dispatch({
-      action: constants.GIST_ERROR,
-      error: err
-    })
-  }
 }
 
 module.exports = new GistActions()

@@ -10,6 +10,7 @@ const UserConstants = require('../../constants/user')
 const GistConstants = require('../../constants/gist')
 const GistActions = require('../../actions/gist')
 const AppActions = require('../../actions/app')
+const {autobind} = require('core-decorators')
 
 module.exports = class App extends React.Component {
 
@@ -31,10 +32,11 @@ module.exports = class App extends React.Component {
           this.render()
           break
         case UserConstants.AUTH_START:
-            this.onAuthStart()
-            break
+          this.onAuthStart()
+          break
         case UserConstants.AUTH_SUCCESS:
           this.onAuthSuccess()
+          this.getAllGist()
           break
         case UserConstants.USER_LOGOUT:
           this.onAuthSignout()
@@ -57,8 +59,17 @@ module.exports = class App extends React.Component {
     // startup app
     AppActions.getInitialState()
     if (this.state.isAuthed) {
-      GistActions.all() // attempt to update cache
+      this.getAllGist() // attempt to update cache
     }
+  }
+
+  @autobind
+  getAllGist () {
+    clearTimeout(this._dispatcherTimer)
+    if (!dispatcher.isDispatching()) {
+      return GistActions.all()
+    }
+    this._dispatcherTimer = setTimeout(this.getAllGist, 500)
   }
 
   getState () {
@@ -73,7 +84,6 @@ module.exports = class App extends React.Component {
       isAuthenticating: false,
       isAuthed: true
     })
-    GistActions.all()
   }
 
   onAuthSignout () {
@@ -98,10 +108,10 @@ module.exports = class App extends React.Component {
     })
   }
 
+  @autobind
   onClick () {
-    // need to figure out good way to do this
     AppActions.clearView()
-    // dispatcher.emit('editor:focus');
+    AppActions.focusEditor()
   }
 
   onGistGetReturn (gist) {
@@ -134,7 +144,7 @@ module.exports = class App extends React.Component {
     }
 
     return (
-      <div className='app-container' onClick={this.onClick.bind(this)}>
+      <div className='app-container' onClick={this.onClick}>
         {content}
       </div>
     )
