@@ -42,6 +42,13 @@ class AppActions extends Base {
     this.dispatcher.dispatch({action: constants.APP_EDITOR_FOCUS})
   }
 
+  triggerEvent (eventTrigger) {
+    this.dispatcher.dispatch({
+      action: constants.APP_EVENT_TRIGGER,
+      eventTrigger: eventTrigger
+    })
+  }
+
 }
 
 module.exports = new AppActions()

@@ -6,6 +6,7 @@ const isRenderer = require('is-electron-renderer')
 let processAction = 'main:action'
 let externalAction = 'renderer:action'
 let sender = ipc
+const ogDispatch = dispatcher.dispatch.bind(dispatcher)
 // let lb = '\n\r'
 
 // this allows our dispatcher to talk through differnt processes\
@@ -31,6 +32,15 @@ ipc.on(processAction, (event, action) => { // catch a dispatch from the main pro
   // console.info(`${lb}broadcasting ${processAction}${lb} ${action.action}${lb} renderer: ${isRenderer}`)
   dispatcher.dispatch(action)
 })
+
+// this is to avoid "Cannot dispatch in the middle of a dispatch." error
+dispatcher.dispatch = function (...args) {
+  const fn = ogDispatch.bind(null, ...args)
+  if (dispatcher.isDispatching()) {
+    return setTimeout(fn, 0)
+  }
+  fn()
+}
 
 module.exports = dispatcher
 module.exports.Dispatcher = Dispatcher

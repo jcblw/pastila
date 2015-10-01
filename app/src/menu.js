@@ -2,9 +2,10 @@
 
 const Menu = require('menu')
 const app = require('app')
-const dispatcher = require('./dispatcher')
+// const dispatcher = require('./dispatcher')
 const shell = require('shell')
 const BrowserWindow = require('browser-window')
+const AppActions = require('../actions/app')
 const template = [
   {
     label: 'Pastila',
@@ -54,21 +55,21 @@ const template = [
         label: 'New Note',
         accelerator: 'CmdOrCtrl+n',
         click: function () {
-          dispatcher.emit('ui:new')
+          AppActions.triggerEvent('ui:new')
         }
       },
       {
         label: 'Open Note',
         accelerator: 'CmdOrCtrl+o',
         click: function () {
-          dispatcher.emit('ui:open')
+          AppActions.triggerEvent('ui:open')
         }
       },
       {
         label: 'Save Note',
         accelerator: 'CmdOrCtrl+s',
         click: function () {
-          dispatcher.emit('ui:forcesave')
+          AppActions.triggerEvent('ui:forcesave')
         }
       }
     ]
@@ -117,7 +118,9 @@ const template = [
       {
         label: 'Toggle DevTools',
         accelerator: 'Alt+CmdOrCtrl+I',
-        click: function () { BrowserWindow.getFocusedWindow().toggleDevTools() }
+        click: function () {
+          BrowserWindow.getFocusedWindow().toggleDevTools()
+        }
       }
     ]
   },
