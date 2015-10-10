@@ -6,6 +6,7 @@
     "babel": "^5.2.6",
     "brace": "^0.5.1",
     "codemirror": "^5.2.0",
+    "core-decorators": "^0.7.0",
     "eventemitter2": "^0.4.14",
     "flux": "^2.1.1",
     "is-electron-renderer": "^2.0.0",

@@ -9,6 +9,8 @@ const AppConstants = require('../../constants/app')
 const UserConstants = require('../../constants/user')
 const GistConstants = require('../../constants/gist')
 const GistActions = require('../../actions/gist')
+const AppActions = require('../../actions/app')
+const {autobind} = require('core-decorators')
 
 module.exports = class App extends React.Component {
 
@@ -19,15 +21,22 @@ module.exports = class App extends React.Component {
       isAuthenticating: false
     }
     dispatcher.register((action) => {
-      switch (action.actionType) {
+      switch (action.action) {
+        case AppConstants.APP_INITIAL_STATE:
+          this.setState(action.state)
+          break
         case AppConstants.APP_STATE_GET:
           this.getState()
           break
         case AppConstants.APP_CHANGED:
           this.render()
           break
+        case UserConstants.AUTH_START:
+          this.onAuthStart()
+          break
         case UserConstants.AUTH_SUCCESS:
           this.onAuthSuccess()
+          this.getAllGist()
           break
         case UserConstants.USER_LOGOUT:
           this.onAuthSignout()
@@ -44,20 +53,39 @@ module.exports = class App extends React.Component {
         case GistConstants.GIST_ALL_RETURNED:
           this.onGistAllReturn(action.gists)
           break
+        case GistConstants.GIST_DELETE:
+          this.checkIfCurrentDeleted(action.id)
+          break
       }
     })
 
     // startup app
+    AppActions.getInitialState()
     if (this.state.isAuthed) {
-      GistActions.all()
+      this.getAllGist() // attempt to update cache
+    }
+  }
+
+  @autobind
+  getAllGist () {
+    clearTimeout(this._dispatcherTimer)
+    if (!dispatcher.isDispatching()) {
+      return GistActions.all()
+    }
+    this._dispatcherTimer = setTimeout(this.getAllGist, 500)
+  }
+
+  checkIfCurrentDeleted(id) {
+    if (this.state.note.id === id) {
+      this.setState({note: null})
+      AppActions.clearView()
+      AppActions.setTitle('Pastila')
     }
   }
 
   getState () {
-    dispatcher.dispatch({
-      action: AppConstants.APP_STATE,
-      state: this.state
-    })
+    AppActions.state(this.state)
+    AppActions.closeWindow()
   }
 
   onAuthSuccess () {
@@ -89,20 +117,22 @@ module.exports = class App extends React.Component {
     })
   }
 
+  @autobind
   onClick () {
-    // need to figure out good way to do this
-    // dispatcher.emit('contextlink:close');
-    // dispatcher.emit('editor:focus');
+    AppActions.clearView()
+    AppActions.focusEditor()
   }
 
   onGistGetReturn (gist) {
     this.setState({
       note: gist
     })
+    AppActions.clearView()
+    AppActions.focusEditor()
   }
 
   onGistAllReturn (gists) {
-    this.app.setState({
+    this.setState({
       notes: gists
     })
   }
@@ -125,7 +155,7 @@ module.exports = class App extends React.Component {
     }
 
     return (
-      <div className='app-container' onClick={this.onClick.bind(this)}>
+      <div className='app-container' onClick={this.onClick}>
         {content}
       </div>
     )

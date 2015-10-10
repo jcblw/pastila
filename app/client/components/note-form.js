@@ -4,6 +4,7 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const GistActions = require('../../actions/gist')
 const _ = require('lodash')
+const {autobind} = require('core-decorators')
 
 module.exports = class EditNoteForm extends React.Component {
 
@@ -37,6 +38,7 @@ module.exports = class EditNoteForm extends React.Component {
     return fileNames[0]
   }
 
+  @autobind
   onFieldChange (e) {
     const el = e.target
     const {name, value} = el
@@ -44,7 +46,6 @@ module.exports = class EditNoteForm extends React.Component {
 
     payload[name] = value
     this.setState(payload)
-    // dispatcher.emit('form:update', this.state)
   }
 
   focusForm (id) {
@@ -56,6 +57,7 @@ module.exports = class EditNoteForm extends React.Component {
     }
   }
 
+  @autobind
   onSubmitForm (e) {
     // think about moving this into the store.
     e.preventDefault()
@@ -73,7 +75,7 @@ module.exports = class EditNoteForm extends React.Component {
 
       payload.files = files
       payload.description = this.state.description
-      GistActions.update(this.props.note.id, payload)
+      return GistActions.update(this.props.note.id, payload)
     }
 
     const name = this.state.fileName.trim()
@@ -85,7 +87,7 @@ module.exports = class EditNoteForm extends React.Component {
     }
 
     payload.files[fileName] = {
-      content: '. '
+      content: '# New Note'
     }
 
     GistActions.create(payload)
@@ -98,18 +100,17 @@ module.exports = class EditNoteForm extends React.Component {
 
   render () {
     const cta = this.props.cta || 'Submit'
-    const onFieldChange = this.onFieldChange.bind(this)
     return (
-      <form onSubmit={this.onSubmitForm.bind(this)} className='form-block form--createGist u-textAlign--left'>
+      <form onSubmit={this.onSubmitForm} className='form-block form--createGist u-textAlign--left'>
         {this.props.children}
         <div className='input-group u-verticalSpacing--default'>
           <label className='input-group--label u-verticalSpacing--small'>File Name</label>
-          <input name='fileName' className='input-group--input' type='text' value={this.state.fileName} onChange={onFieldChange} ref='fileName' />
+          <input name='fileName' className='input-group--input' type='text' value={this.state.fileName} onChange={this.onFieldChange} ref='fileName' />
           <small className='input-group--small'>File name will be suffixed with .md</small>
         </div>
         <div className='input-group u-verticalSpacing--default'>
           <label className='input-group--label u-verticalSpacing--small'>Description</label>
-          <textarea name='description' className='input-group--input' type='text' value={this.state.description} onChange={onFieldChange}></textarea>
+          <textarea name='description' className='input-group--input' type='text' value={this.state.description} onChange={this.onFieldChange}></textarea>
         </div>
         <div className='input-group u-textAlign--right'>
           <button className='btn btn-primary'>{cta}</button>

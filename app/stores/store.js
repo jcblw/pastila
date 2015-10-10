@@ -103,7 +103,7 @@ module.exports = class Store {
     const _events = this.getEvents()
     dispatcher.register((action) => {
       for (let key in _events) {
-        if (action.actionType === key && typeof _events[key] === 'function') {
+        if (action.action === key && typeof _events[key] === 'function') {
           _events[key](action)
         }
       }

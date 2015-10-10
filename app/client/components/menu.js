@@ -6,6 +6,8 @@ const createFragment = require('react-addons-create-fragment')
 const NoteItem = require('./note-item')
 const ContextLink = require('./context-link')
 const NoteForm = require('./note-form')
+const UserActions = require('../../actions/user')
+const {autobind} = require('core-decorators')
 // const dispatcher = require('../../src/dispatcher')
 
 module.exports = class Notes extends React.Component {
@@ -45,8 +47,9 @@ module.exports = class Notes extends React.Component {
     }
   }
 
+  @autobind
   signout () {
-    // dispatcher.emit('auth:signout')
+    UserActions.logout()
   }
 
   render () {
@@ -75,7 +78,7 @@ module.exports = class Notes extends React.Component {
           <ContextLink icon='settings' size='medium' bottom={true} className='u-textAlign--center u-verticalSpacing--default'>
             <ul className='u-textAlign--left'>
               <li className='listitem'>
-                <a href='#' onClick={this.signout.bind(this)}>
+                <a href='#' onClick={this.signout}>
                   Sign Out
                 </a>
               </li>

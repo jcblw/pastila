@@ -3,54 +3,24 @@
 const ace = require('brace')
 const React = require('react')
 const _ = require('lodash')
-// const dispatcher = require('../dispatcher')
+const {debounce, autobind} = require('core-decorators')
+const dispatcher = require('../../src/dispatcher')
+const AppConstants = require('../../constants/app')
 
 require('brace/theme/github')
 // require('brace/theme/textmate');
 require('brace/theme/kuroir')
 require('brace/mode/markdown')
 
-module.exports = React.createClass({
+class Editor extends React.Component {
 
-  propTypes: {
-    id: React.PropTypes.string,
-    mode: React.PropTypes.string,
-    theme: React.PropTypes.string,
-    name: React.PropTypes.string,
-    height: React.PropTypes.string,
-    width: React.PropTypes.string,
-    fontSize: React.PropTypes.number,
-    showGutter: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.string,
-    onLoad: React.PropTypes.func,
-    maxLines: React.PropTypes.number,
-    readOnly: React.PropTypes.bool,
-    highlightActiveLine: React.PropTypes.bool,
-    showPrintMargin: React.PropTypes.bool
-  },
-  getInitialState () {
-    // dispatcher.on('editor:focus', this.focusEditor.bind(this))
-    return {
-      value: this.props.value
-    }
-  },
-  getDefaultProps () {
-    return {
-      name: 'brace-editor',
-      mode: 'markdown',
-      theme: 'kuroir',
-      height: '100%',
-      width: '100%',
-      value: '',
-      fontSize: 19,
-      showGutter: false,
-      onChange: null,
-      onLoad: null,
-      maxLines: null,
-      readOnly: false
-    }
-  },
+  constructor (props) {
+    super()
+    this.state = {value: props.value}
+  }
+
+  @autobind
+  @debounce(500)
   onChange () {
     const value = this.editor.getValue()
     if (this.state.value === value) {
@@ -61,7 +31,8 @@ module.exports = React.createClass({
       this.props.onChange(value, this.props.id)
       this.setState({value: value})
     }
-  },
+  }
+
   componentDidMount () {
     const editor = this.editor = ace.edit(this.props.name)
     const session = editor.getSession()
@@ -86,7 +57,8 @@ module.exports = React.createClass({
     if (this.props.onLoad) {
       this.props.onLoad(this.editor)
     }
-  },
+  }
+
   componentWillReceiveProps (nextProps) {
     const editor = this.editor = ace.edit(this.props.name)
     const session = editor.getSession()
@@ -107,20 +79,69 @@ module.exports = React.createClass({
     if (nextProps.onLoad) {
       nextProps.onLoad(this.editor)
     }
-  },
+  }
+
   focusEditor () {
     if (this.editor && typeof this.editor.focus === 'function') {
       this.editor.focus()
     }
-  },
+  }
+
+  componentWillMount () {
+    this._dispatherToken = dispatcher.register((action) => {
+      if (action.action === AppConstants.APP_EDITOR_FOCUS) {
+        this.focusEditor()
+      }
+    })
+  }
+
+  componentWillUnmount () {
+    dispatcher.unregister(this._dispatherToken)
+  }
+
   render () {
     const divStyle = {
       width: this.props.width,
       height: this.props.height
     }
     return (
-      <div id={this.props.name} onChange={_.debounce(_.bind(this.onChange, this), 500)} style={divStyle}>
-      </div>
+      <div id={this.props.name} onChange={this.onChange} style={divStyle}></div>
     )
   }
-})
+
+}
+
+Editor.propTypes = {
+  id: React.PropTypes.string,
+  mode: React.PropTypes.string,
+  theme: React.PropTypes.string,
+  name: React.PropTypes.string,
+  height: React.PropTypes.string,
+  width: React.PropTypes.string,
+  fontSize: React.PropTypes.number,
+  showGutter: React.PropTypes.bool,
+  onChange: React.PropTypes.func,
+  value: React.PropTypes.string,
+  onLoad: React.PropTypes.func,
+  maxLines: React.PropTypes.number,
+  readOnly: React.PropTypes.bool,
+  highlightActiveLine: React.PropTypes.bool,
+  showPrintMargin: React.PropTypes.bool
+}
+
+Editor.defaultProps = {
+  name: 'brace-editor',
+  mode: 'markdown',
+  theme: 'kuroir',
+  height: '100%',
+  width: '100%',
+  value: '',
+  fontSize: 19,
+  showGutter: false,
+  onChange: null,
+  onLoad: null,
+  maxLines: null,
+  readOnly: false
+}
+
+module.exports = Editor
