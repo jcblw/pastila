@@ -4,13 +4,13 @@ const React = require('react')
 const Editor = require('./editor')
 const GistActions = require('../../actions/gist')
 const AppActions = require('../../actions/app')
+const {autobind} = require('core-decorators')
 const _ = require('lodash')
 
 module.exports = class Notes extends React.Component {
 
   constructor (options) {
     super(options)
-    this.onFileChange = _.debounce(this.onFileChange.bind(this), 2000)
   }
 
   getContent () {
@@ -24,6 +24,7 @@ module.exports = class Notes extends React.Component {
     return 'Open a note by clicking a note in the sidebar'
   }
 
+  @autobind
   onFileChange (content, id) {
     if (this.props.note) {
       const fileNames = Object.keys(this.props.note.files)
