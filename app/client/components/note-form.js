@@ -15,7 +15,6 @@ module.exports = class EditNoteForm extends React.Component {
       fileName: this.getFileName(note),
       description: note ? note.description : ''
     }
-    // dispatcher.on('focus', this.focusForm.bind(this));
   }
 
   componentWillReceiveProps (props) {

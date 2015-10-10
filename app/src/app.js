@@ -13,6 +13,7 @@ const logPath = path.resolve(__dirname, 'pastila-session.log')
 const log = fs.createWriteStream(logPath)
 const dbPath = path.resolve(__dirname, '.pastila')
 const development = !!process.env.DEBUG_PASTILA
+const AppConstants = require('../constants/app')
 let db = levelup(dbPath, {valueEncoding: 'json'})
 let mainWindow
 let pastila
@@ -28,8 +29,8 @@ pastila = new Pastila({
 
 function createMainWindow () {
   const _window = new BrowserWindow({
-    width: 600,
-    height: 600,
+    width: AppConstants.DEFAULT_WIDTH,
+    height: AppConstants.DEFAULT_HEIGHT,
     show: false
   })
 

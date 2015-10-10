@@ -3,7 +3,7 @@
 const ace = require('brace')
 const React = require('react')
 const _ = require('lodash')
-const {debounce, autobind} = require('core-decorators')
+const {autobind} = require('core-decorators')
 const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
 
@@ -20,7 +20,6 @@ class Editor extends React.Component {
   }
 
   @autobind
-  @debounce(500)
   onChange () {
     const value = this.editor.getValue()
     if (this.state.value === value) {

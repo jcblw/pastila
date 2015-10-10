@@ -66,6 +66,13 @@ class GistActions extends Base {
     })
   }
 
+  preview (gist) {
+    this.dispatcher.dispatch({
+      action: constants.PREVIEW_MARKDOWN,
+      gist: gist
+    })
+  }
+
 }
 
 module.exports = new GistActions()

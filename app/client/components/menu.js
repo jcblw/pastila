@@ -4,17 +4,17 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const createFragment = require('react-addons-create-fragment')
 const NoteItem = require('./note-item')
+const Icon = require('./icon')
 const ContextLink = require('./context-link')
 const NoteForm = require('./note-form')
 const UserActions = require('../../actions/user')
+const GistActions = require('../../actions/gist')
 const {autobind} = require('core-decorators')
-// const dispatcher = require('../../src/dispatcher')
 
 module.exports = class Notes extends React.Component {
 
   constructor () {
     super()
-    // dispatcher.on('focus', this.focusItem.bind(this));
   }
 
   noop () {}
@@ -48,6 +48,11 @@ module.exports = class Notes extends React.Component {
   }
 
   @autobind
+  onPreviewClick () {
+    GistActions.preview(this.props.note);
+  }
+
+  @autobind
   signout () {
     UserActions.logout()
   }
@@ -68,6 +73,11 @@ module.exports = class Notes extends React.Component {
           <ContextLink icon='pen' size='medium' color='dark' className={penClassName} onChange={this.noop} focusId='editForm'>
             <NoteForm note={this.props.note} onChange={this.noop} id='editForm' />
           </ContextLink>
+          <li className={penClassName}>
+            <span onClick={this.onPreviewClick}>
+              <Icon className='menu-icon' type='preview' color='dark' size='medium' />
+            </span>
+          </li>
         </ul>
         <ul className='list list--bottom'>
           <ContextLink icon='plus' size='medium' color='dark' bottom={true} className='u-textAlign--center u-verticalSpacing--default' eventTrigger='ui:new' focusId='newForm'>

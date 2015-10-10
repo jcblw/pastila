@@ -5,6 +5,7 @@
   "dependencies": {
     "babel": "^5.2.6",
     "brace": "^0.5.1",
+    "brucedown": "^1.1.1",
     "codemirror": "^5.2.0",
     "core-decorators": "^0.7.0",
     "eventemitter2": "^0.4.14",
@@ -14,6 +15,7 @@
     "leveldown": "^1.4.1",
     "levelup": "^1.2.1",
     "lodash": "^3.8.0",
+    "marked": "^0.3.5",
     "react": "^0.14.0-rc1",
     "react-ace": "^1.1.7",
     "react-addons-create-fragment": "^0.14.0-rc1",

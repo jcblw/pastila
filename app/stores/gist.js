@@ -4,7 +4,7 @@ const Store = require('./store')
 const _ = require('lodash')
 const GistConstants = require('../constants/gist')
 const GistActions = require('../actions/gist')
-const {autobind} = require('core-decorators')
+const {autobind, debounce} = require('core-decorators')
 
 module.exports = class Gist extends Store {
 
@@ -75,6 +75,7 @@ module.exports = class Gist extends Store {
   }
 
   @autobind
+  @debounce(2000)
   update (action) {
     const {id, gist} = action
     const payload = {
