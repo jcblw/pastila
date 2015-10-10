@@ -1,19 +1,19 @@
-'use strict';
+'use strict'
 
-var gaze = require('gaze');
+const gaze = require('gaze')
+const BrowserWindow = require('browser-window')
 
-module.exports = function(dir = '', mainWindow = {}, factory = function(){}) {
-  console.log('starting up development mode for', dir);
-  gaze(dir, function(err) {
+module.exports = function (dir = '', mainWindow = {}, factory = function () {}) {
+  console.log(`starting up development mode for ${dir}`)
+  BrowserWindow
+    .addDevToolsExtension('devtools/react-devtools/shells/chrome')
+  gaze(dir, function (err) {
     if (err) {
-      return console.warn('Error watcher not attached', err);
+      return console.warn('Error watcher not attached', err)
     }
 
-    this.on('changed', function(filePath) {
-      console.log('File changed', filePath);
-      // window factory
-      factory();
-    });
-
-  });
-};
+    this.on('changed', function (filePath) {
+      factory()
+    })
+  })
+}
