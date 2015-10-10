@@ -111,6 +111,6 @@ module.exports = class Gist extends Store {
   }
 
   static parseResponse (resp) {
-    return _.pick(resp, 'files', 'id', 'description')
+    return _.pick(resp, 'files', 'id', 'description', 'html_url')
   }
 }
