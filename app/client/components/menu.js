@@ -7,6 +7,7 @@ const NoteItem = require('./note-item')
 const Icon = require('./icon')
 const ContextLink = require('./context-link')
 const NoteForm = require('./note-form')
+const CopyLink = require('./copy-link')
 const UserActions = require('../../actions/user')
 const GistActions = require('../../actions/gist')
 const {autobind} = require('core-decorators')
@@ -61,6 +62,7 @@ module.exports = class Notes extends React.Component {
     const list = this.getNodeList()
     const penClassName = (this.props.note ? '' : 'is-hidden ') +
         'u-textAlign--center u-verticalSpacing--default'
+    const shareURL = this.props.note ? this.props.note.html_url : null
 
     return (
       <div className='menu pure-menu u-padding--default' style={this.props.style}>
@@ -77,6 +79,11 @@ module.exports = class Notes extends React.Component {
             <span onClick={this.onPreviewClick}>
               <Icon className='menu-icon' type='preview' color='dark' size='medium' />
             </span>
+          </li>
+          <li className={penClassName}>
+            <CopyLink
+              copyText={shareURL}
+            />
           </li>
         </ul>
         <ul className='list list--bottom'>
