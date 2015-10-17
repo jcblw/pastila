@@ -11,8 +11,16 @@ const GistConstants = require('../../constants/gist')
 const GistActions = require('../../actions/gist')
 const AppActions = require('../../actions/app')
 const {autobind} = require('core-decorators')
+const propTypes = {
+  isAuthed: React.PropTypes.bool,
+  clientId: React.PropTypes.string,
+  redirectURL: React.PropTypes.string
+}
+const defaultProps = {
+  isAuthed: false
+}
 
-module.exports = class App extends React.Component {
+class App extends React.Component {
 
   constructor (props) {
     super(props)
@@ -30,6 +38,12 @@ module.exports = class App extends React.Component {
           break
         case AppConstants.APP_CHANGED:
           this.render()
+          break
+        case AppConstants.APP_LOADING:
+          this.setState({isLoading: true})
+          break
+        case AppConstants.APP_LOADING_DONE:
+          this.setState({isLoading: false})
           break
         case UserConstants.AUTH_START:
           this.onAuthStart()
@@ -142,15 +156,15 @@ module.exports = class App extends React.Component {
 
     if (this.state.isAuthed) {
       content = (
-        <Notes notes={this.state.notes} note={this.state.note} />
+        <Notes notes={this.state.notes} note={this.state.note} isLoading={this.state.isLoading} />
       )
     } else if (this.state.isAuthenticating) {
       content = (
-        <Auth clientId={this.props.clientId} redirectURL={this.props.redirectURL} />
+        <Auth clientId={this.props.clientId} redirectURL={this.props.redirectURL} isLoading={this.state.isLoading} />
       )
     } else {
       content = (
-        <SignIn errorMessage={this.state.errorMessage} />
+        <SignIn errorMessage={this.state.errorMessage} isLoading={this.state.isLoading} />
       )
     }
 
@@ -161,3 +175,8 @@ module.exports = class App extends React.Component {
     )
   }
 }
+
+App.propTypes = propTypes
+App.defaultProps = defaultProps
+
+module.exports = App

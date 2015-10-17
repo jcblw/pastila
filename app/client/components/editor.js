@@ -6,6 +6,37 @@ const _ = require('lodash')
 const {autobind} = require('core-decorators')
 const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
+const propTypes = {
+  id: React.PropTypes.string,
+  mode: React.PropTypes.string,
+  theme: React.PropTypes.string,
+  name: React.PropTypes.string,
+  height: React.PropTypes.string,
+  width: React.PropTypes.string,
+  fontSize: React.PropTypes.number,
+  showGutter: React.PropTypes.bool,
+  onChange: React.PropTypes.func,
+  value: React.PropTypes.string,
+  onLoad: React.PropTypes.func,
+  maxLines: React.PropTypes.number,
+  readOnly: React.PropTypes.bool,
+  highlightActiveLine: React.PropTypes.bool,
+  showPrintMargin: React.PropTypes.bool
+}
+const defaultProps = {
+  name: 'brace-editor',
+  mode: 'markdown',
+  theme: 'kuroir',
+  height: '100%',
+  width: '100%',
+  value: '',
+  fontSize: 19,
+  showGutter: false,
+  onChange: null,
+  onLoad: null,
+  maxLines: null,
+  readOnly: false
+}
 
 require('brace/theme/github')
 // require('brace/theme/textmate');
@@ -110,37 +141,7 @@ class Editor extends React.Component {
 
 }
 
-Editor.propTypes = {
-  id: React.PropTypes.string,
-  mode: React.PropTypes.string,
-  theme: React.PropTypes.string,
-  name: React.PropTypes.string,
-  height: React.PropTypes.string,
-  width: React.PropTypes.string,
-  fontSize: React.PropTypes.number,
-  showGutter: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.string,
-  onLoad: React.PropTypes.func,
-  maxLines: React.PropTypes.number,
-  readOnly: React.PropTypes.bool,
-  highlightActiveLine: React.PropTypes.bool,
-  showPrintMargin: React.PropTypes.bool
-}
-
-Editor.defaultProps = {
-  name: 'brace-editor',
-  mode: 'markdown',
-  theme: 'kuroir',
-  height: '100%',
-  width: '100%',
-  value: '',
-  fontSize: 19,
-  showGutter: false,
-  onChange: null,
-  onLoad: null,
-  maxLines: null,
-  readOnly: false
-}
+Editor.propTypes = propTypes
+Editor.defaultProps = defaultProps
 
 module.exports = Editor

@@ -4,6 +4,7 @@ const Store = require('./store')
 const _ = require('lodash')
 const GistConstants = require('../constants/gist')
 const GistActions = require('../actions/gist')
+const AppActions = require('../actions/app')
 const {autobind, debounce} = require('core-decorators')
 
 module.exports = class Gist extends Store {
@@ -16,8 +17,10 @@ module.exports = class Gist extends Store {
   @autobind
   all (action) {
     const {refresh} = action
+    AppActions.loading()
     this.log(`gist::all - getting gist for user ${this.username}`)
     this.request('gists', `/users/${this.username}/gists`, (err, gists) => {
+      AppActions.doneLoading()
       if (err) {
         return GistActions.error(err)
       }
@@ -38,7 +41,9 @@ module.exports = class Gist extends Store {
   @autobind
   get (action) {
     this.log(`gist::get - getting gist ${action.id}`)
+    AppActions.loading()
     this.request(`gists:${action.id}`, `/gists/${action.id}`, (err, gist) => {
+      AppActions.doneLoading()
       if (err) {
         return GistActions.error(err)
       }
@@ -49,7 +54,9 @@ module.exports = class Gist extends Store {
   @autobind
   remove (action) {
     const {id} = action
+    AppActions.loading()
     this.del(`/gists/${id}`, (err) => {
+      AppActions.doneLoading()
       if (err) {
         return GistActions.error(err)
       }
@@ -60,7 +67,9 @@ module.exports = class Gist extends Store {
   @autobind
   create (action) {
     const {gist} = action
+    AppActions.loading()
     this.post('/gists', gist, (err, _gist) => {
+      AppActions.doneLoading()
       if (err) {
         return GistActions.error(err)
       }
@@ -82,8 +91,10 @@ module.exports = class Gist extends Store {
       files: gist.files,
       description: gist.description
     }
+    AppActions.loading()
     this.log(`gist::update - updating gist ${id}`)
     this.patch(`/gists/${id}`, payload, (err, _gist) => {
+      AppActions.doneLoading()
       if (err) {
         return GistActions.error(err)
       }

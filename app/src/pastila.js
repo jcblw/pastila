@@ -73,8 +73,15 @@ module.exports = class Pastila {
       show: true,
       title: filename
     })
+
+    let isHandled = false
     brucedown(file.content, (err, results) => {
-      if (err) { return }
+      if (isHandled) { return }
+      isHandled = true
+      if (err) {
+        console.log(err.message)
+        results = `<h1>${err.message}</h1>`
+      }
 
       const html = `
         <!doctype html>

@@ -60,6 +60,14 @@ class AppActions extends Base {
     this.dispatcher.dispatch({action: constants.APP_CLOSE_WINDOW})
   }
 
+  loading () {
+    this.dispatcher.dispatch({action: constants.APP_LOADING})
+  }
+
+  doneLoading () {
+    this.dispatcher.dispatch({action: constants.APP_LOADING_DONE})
+  }
+
 }
 
 module.exports = new AppActions()

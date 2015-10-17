@@ -5,8 +5,11 @@ const Icon = require('./icon')
 const GistActions = require('../../actions/gist')
 const AppActions = require('../../actions/app')
 const {autobind} = require('core-decorators')
+const propTypes = {
+  note: React.PropTypes.object,
+}
 
-module.exports = class NoteItem extends React.Component {
+class NoteItem extends React.Component {
 
   @autobind
   loadNote () {
@@ -21,7 +24,7 @@ module.exports = class NoteItem extends React.Component {
   }
 
   render () {
-    const note = this.props.note
+    const {note} = this.props
     const files = Object.keys(note.files)
     return (
       <li className='listitem'>
@@ -33,3 +36,7 @@ module.exports = class NoteItem extends React.Component {
     )
   }
 }
+
+NoteItem.propTypes = propTypes
+
+module.exports = NoteItem

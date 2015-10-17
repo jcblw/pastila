@@ -6,6 +6,7 @@
 @import url(./icons.css);
 @import url(./avatars.css);
 @import url(./states.css);
+@import url(./loader.css);
 
 body, html, #pastila {
   height: 100%;

@@ -5,9 +5,15 @@ const Editor = require('./editor')
 const GistActions = require('../../actions/gist')
 const AppActions = require('../../actions/app')
 const {autobind} = require('core-decorators')
-const _ = require('lodash')
+const propTypes = {
+  note: React.PropTypes.object,
+  style: React.PropTypes.object
+}
+const defaultProps = {
+  style: {}
+}
 
-module.exports = class Notes extends React.Component {
+class Workspace extends React.Component {
 
   constructor (options) {
     super(options)
@@ -54,3 +60,8 @@ module.exports = class Notes extends React.Component {
     )
   }
 }
+
+Workspace.propTypes = propTypes
+Workspace.defaultProps = defaultProps
+
+module.exports = Workspace
