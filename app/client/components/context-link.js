@@ -7,8 +7,18 @@ const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
 const AppActions = require('../../actions/app')
 const {autobind} = require('core-decorators')
+const propTypes = {
+  icon: React.PropTypes.string,
+  user: React.PropTypes.object,
+  bottom: React.PropTypes.bool,
+  className: React.PropTypes.string
+}
+const defaultProps = {
+  bottom: false,
+  className: ''
+}
 
-module.exports = class ContextLink extends React.Component {
+class ContextLink extends React.Component {
 
   constructor (options) {
     super(options)
@@ -44,9 +54,7 @@ module.exports = class ContextLink extends React.Component {
   }
 
   componentDidUpdate () {
-    if (this.state.isOpen === true) {
-      // dispatcher.emit('focus', this.props.focusId)
-    }
+    if (this.state.isOpen === true) {}
   }
 
   componentWillMount () {
@@ -102,3 +110,8 @@ module.exports = class ContextLink extends React.Component {
   }
 
 }
+
+ContextLink.propTypes = propTypes
+ContextLink.defaultProps = defaultProps
+
+module.exports = ContextLink

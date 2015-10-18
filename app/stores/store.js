@@ -2,6 +2,7 @@
 
 const request = require('request')
 const dispatcher = require('../src/dispatcher')
+const _ = require('lodash')
 
 module.exports = class Store {
 
@@ -36,7 +37,7 @@ module.exports = class Store {
           })
         })
       }
-      callback(null, resource)
+      _.defer(callback.bind(null, null, resource))
     })
   }
 

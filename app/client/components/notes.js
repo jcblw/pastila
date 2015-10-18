@@ -7,7 +7,7 @@ const Workspace = require('./workspace')
 module.exports = (props) => {
   return (
     <div className='notes-container'>
-      <Menu notes={props.notes} note={props.note} />
+      <Menu notes={props.notes} note={props.note} isLoading={props.isLoading} />
       <Workspace note={props.note} />
     </div>
   )

@@ -8,8 +8,9 @@ const App = require('./components/app')
 const AppActions = require('../actions/app')
 const AppConstants = require('../constants/app')
 const dispatcher = require('../src/dispatcher')
+const isAuthed = query.isAuthed === 'true'
 
-ReactDOM.render(<App isAuthed={query.isAuthed} />, document.getElementById('pastila'))
+ReactDOM.render(<App isAuthed={isAuthed} />, document.getElementById('pastila'))
 // save the state of the app before closing
 window.onbeforeunload = function () {
   AppActions.getState()

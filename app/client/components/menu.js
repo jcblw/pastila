@@ -11,8 +11,14 @@ const CopyLink = require('./copy-link')
 const UserActions = require('../../actions/user')
 const GistActions = require('../../actions/gist')
 const {autobind} = require('core-decorators')
+const propTypes = {
+  isLoading: React.PropTypes.bool
+}
+const defaultProps = {
+  isLoading: false
+}
 
-module.exports = class Notes extends React.Component {
+class Notes extends React.Component {
 
   constructor () {
     super()
@@ -63,6 +69,13 @@ module.exports = class Notes extends React.Component {
     const penClassName = (this.props.note ? '' : 'is-hidden ') +
         'u-textAlign--center u-verticalSpacing--default'
     const shareURL = this.props.note ? this.props.note.html_url : null
+    const loader = this.props.isLoading ? createFragment({
+      loader: (
+        <li>
+          <div className='loader'></div>
+        </li>
+      )
+    }) : '';
 
     return (
       <div className='menu pure-menu u-padding--default' style={this.props.style}>
@@ -85,6 +98,7 @@ module.exports = class Notes extends React.Component {
               copyText={shareURL}
             />
           </li>
+          {loader}
         </ul>
         <ul className='list list--bottom'>
           <ContextLink icon='plus' size='medium' color='dark' bottom={true} className='u-textAlign--center u-verticalSpacing--default' eventTrigger='ui:new' focusId='newForm'>
@@ -106,3 +120,8 @@ module.exports = class Notes extends React.Component {
     )
   }
 }
+
+Notes.propTypes = propTypes
+Notes.defaultProps = defaultProps
+
+module.exports = Notes

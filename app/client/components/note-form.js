@@ -5,8 +5,17 @@ const ReactDOM = require('react-dom')
 const GistActions = require('../../actions/gist')
 const _ = require('lodash')
 const {autobind} = require('core-decorators')
+const propTypes = {
+  note: React.PropTypes.object,
+  id: React.PropTypes.string,
+  cta: React.PropTypes.string
+}
+const defaultProps = {
+  id: '',
+  cta: 'Submit'
+}
 
-module.exports = class EditNoteForm extends React.Component {
+class EditNoteForm extends React.Component {
 
   constructor (options) {
     super(options)
@@ -98,7 +107,6 @@ module.exports = class EditNoteForm extends React.Component {
   }
 
   render () {
-    const cta = this.props.cta || 'Submit'
     return (
       <form onSubmit={this.onSubmitForm} className='form-block form--createGist u-textAlign--left'>
         {this.props.children}
@@ -112,9 +120,14 @@ module.exports = class EditNoteForm extends React.Component {
           <textarea name='description' className='input-group--input' type='text' value={this.state.description} onChange={this.onFieldChange}></textarea>
         </div>
         <div className='input-group u-textAlign--right'>
-          <button className='btn btn-primary'>{cta}</button>
+          <button className='btn btn-primary'>{this.props.cta}</button>
         </div>
       </form>
     )
   }
 }
+
+EditNoteForm.propTypes = propTypes
+EditNoteForm.defaultProps = defaultProps
+
+module.exports = EditNoteForm

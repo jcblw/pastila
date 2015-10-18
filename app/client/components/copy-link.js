@@ -6,8 +6,8 @@ const ClipBoard = require('clipboard')
 const propTypes = {
   copyText: React.PropTypes.string,
   icon: React.PropTypes.string,
-  onError: React.PropTypes.function,
-  onSuccess: React.PropTypes.function,
+  onError: React.PropTypes.func,
+  onSuccess: React.PropTypes.func,
   timeout: React.PropTypes.number,
   className: React.PropTypes.string,
   inputClassName: React.PropTypes.string,
