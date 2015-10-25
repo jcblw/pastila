@@ -100,8 +100,8 @@ class ContextLink extends React.Component {
     const link = this.getLink()
 
     return (
-      <li className={`${this.props.className} ${this.state.isOpen ? 'is-active ' : ' '}`}>
-        <span onClick={this.onClickOpen}>{link}</span>
+      <li className={`${this.props.className} ${this.state.isOpen ? 'is-active ' : ' '}`} onClick={this.onClickOpen}>
+        <span>{link}</span>
         <div className={className} onClick={this.onContextClick}>
           {this.props.children}
         </div>

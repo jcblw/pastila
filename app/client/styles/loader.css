@@ -1,11 +1,11 @@
 @keyframes spin { 100% { transform:rotate(360deg); } }
 
 .loader {
-  width: 32px;
-  height: 32px;
+  width: var(--icon-medium);
+  height: var(--icon-medium);
   border-width: 2px;
   border-style: solid;
-  border-color: #7a7a7a transparent transparent;
+  border-color: var(--grey) transparent transparent;
   border-radius: 20px;
   animation: spin 1s linear infinite;
 }

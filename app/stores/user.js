@@ -58,10 +58,9 @@ module.exports = class User extends Store {
       .on('end', function () {
         UserActions.loggedout()
       })
-      .pipe(through(function (chunk, enc, callback) {
-        this.push(chunk)
-        db.del(chunk.toString(), callback)
-      }))
+      .on('data', function (key) {
+        db.del(key, function () {})
+      })
   }
 
   get (callback) {

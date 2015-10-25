@@ -6,7 +6,6 @@ const qs = require('querystring')
 const fs = require('fs')
 const Pastila = require('./pastila')
 const levelup = require('levelup')
-const ttl = require('level-ttl')
 const path = require('path')
 const menu = require('./menu')
 const logPath = path.resolve(__dirname, 'pastila-session.log')
@@ -19,7 +18,6 @@ let mainWindow
 let pastila
 
 require('crash-reporter').start() // report crashes
-db = ttl(db)
 pastila = new Pastila({
   db: db,
   clientId: '4e73f807eaa53c1b7661',

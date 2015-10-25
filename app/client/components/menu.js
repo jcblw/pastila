@@ -67,20 +67,20 @@ class Notes extends React.Component {
   render () {
     const list = this.getNodeList()
     const penClassName = (this.props.note ? '' : 'is-hidden ') +
-        'u-textAlign--center u-verticalSpacing--default'
+        'u-textAlign--center u-padding--default'
     const shareURL = this.props.note ? this.props.note.html_url : null
     const loader = this.props.isLoading ? createFragment({
       loader: (
-        <li>
+        <li className='u-padding--default'>
           <div className='loader'></div>
         </li>
       )
     }) : '';
 
     return (
-      <div className='menu pure-menu u-padding--default' style={this.props.style}>
+      <div className='menu pure-menu' style={this.props.style}>
         <ul className='list'>
-          <ContextLink icon='stacks' size='medium' color='dark' className='u-textAlign--center u-verticalSpacing--default' eventTrigger='ui:open' focusId='noteList'>
+          <ContextLink icon='stacks' size='medium' color='dark' className='u-textAlign--center u-padding--default' eventTrigger='ui:open' focusId='noteList'>
             <ul className='u-textAlign--left'>
               {list}
             </ul>
@@ -101,12 +101,12 @@ class Notes extends React.Component {
           {loader}
         </ul>
         <ul className='list list--bottom'>
-          <ContextLink icon='plus' size='medium' color='dark' bottom={true} className='u-textAlign--center u-verticalSpacing--default' eventTrigger='ui:new' focusId='newForm'>
+          <ContextLink icon='plus' size='medium' color='dark' bottom={true} className='u-textAlign--center u-padding--default' eventTrigger='ui:new' focusId='newForm'>
             <NoteForm onChange={this.noop} id='newForm'>
               <label className='u-fontSize--larger u-verticalSpacing--default'>Create New Note</label>
             </NoteForm>
           </ContextLink>
-          <ContextLink icon='settings' size='medium' bottom={true} className='u-textAlign--center u-verticalSpacing--default'>
+          <ContextLink icon='settings' size='medium' bottom={true} className='u-textAlign--center u-padding--default'>
             <ul className='u-textAlign--left'>
               <li className='listitem'>
                 <a href='#' onClick={this.signout}>

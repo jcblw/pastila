@@ -68,6 +68,13 @@ class AppActions extends Base {
     this.dispatcher.dispatch({action: constants.APP_LOADING_DONE})
   }
 
+  notification (message) {
+    this.dispatcher.dispatch({
+      action: constants.APP_NOTIFICATION,
+      message
+    })
+  }
+
 }
 
 module.exports = new AppActions()

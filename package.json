@@ -9,10 +9,11 @@
     "postinstall": "cd app && npm install",
     "cleanbuild": "git clean -xdf && npm install && npm run build",
     "build": "rm -rf Pastila.app && electron-packager app/ Pastila --icon=assets/icon.icns",
+    "styles": "node scripts/styles.js app/client/styles/main.css app/client/styles/app.css",
     "devtools": "rm -rf devtools && mkdir devtools/ && npm run devtools-install && npm run devtools-postinstall && npm run devtools-build",
     "devtools-install": "cd devtools && git clone --recursive https://github.com/facebook/react-devtools.git",
     "devtools-postinstall": "cd devtools/react-devtools/ && npm install",
-    "devtools-build" : "cd devtools/react-devtools/shells/chrome && ../../node_modules/.bin/webpack --config webpack.backend.js && ../../node_modules/.bin/webpack"
+    "devtools-build": "cd devtools/react-devtools/shells/chrome && ../../node_modules/.bin/webpack --config webpack.backend.js && ../../node_modules/.bin/webpack"
   },
   "keywords": [
     "electron"
@@ -21,6 +22,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron-packager": "^3.1.0",
-    "electron-prebuilt": "^0.33.2"
+    "electron-prebuilt": "^0.33.2",
+    "cssnext": "^1.8.4",
+    "postcss-import": "^7.1.0"
   }
 }

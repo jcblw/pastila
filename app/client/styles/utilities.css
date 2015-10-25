@@ -1,5 +1,9 @@
 /* spacing */
 
+.u-padding--tight {
+  padding: 10px;
+}
+
 .u-padding--default {
   padding: 20px;
 }

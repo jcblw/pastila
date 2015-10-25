@@ -110,7 +110,9 @@ module.exports = class Pastila {
         return callback(err)
       }
       this.username = _user.login
-      this.gists = new Gist(this)
+      if (!this.gists) {
+        this.gists = new Gist(this)
+      }
       callback()
     })
   }

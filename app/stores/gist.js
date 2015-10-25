@@ -22,7 +22,8 @@ module.exports = class Gist extends Store {
     this.request('gists', `/users/${this.username}/gists`, (err, gists) => {
       AppActions.doneLoading()
       if (err) {
-        return GistActions.error(err)
+        GistActions.error(err)
+        return AppActions.notification('failed to update gists list')
       }
       GistActions.sendAll(gists)
     }, refresh)
@@ -45,7 +46,8 @@ module.exports = class Gist extends Store {
     this.request(`gists:${action.id}`, `/gists/${action.id}`, (err, gist) => {
       AppActions.doneLoading()
       if (err) {
-        return GistActions.error(err)
+        GistActions.error(err)
+        return AppActions.notification('failed to load gist')
       }
       GistActions.sendGist(gist)
     })
@@ -58,7 +60,8 @@ module.exports = class Gist extends Store {
     this.del(`/gists/${id}`, (err) => {
       AppActions.doneLoading()
       if (err) {
-        return GistActions.error(err)
+        GistActions.error(err)
+        return AppActions.notification('failed to remove gist')
       }
       GistActions.all(true) // refresh our list
     })
@@ -71,8 +74,10 @@ module.exports = class Gist extends Store {
     this.post('/gists', gist, (err, _gist) => {
       AppActions.doneLoading()
       if (err) {
-        return GistActions.error(err)
+        GistActions.error(err)
+        return AppActions.notification('failed to create gist')
       }
+      AppActions.notification('gist created!')
       this.setCache(`gists:${_gist.id}`, _gist)
       GistActions.sendGist(_gist)
       GistActions.all(true)
@@ -92,13 +97,17 @@ module.exports = class Gist extends Store {
       description: gist.description
     }
     AppActions.loading()
+    this.isLoading = true;
     this.log(`gist::update - updating gist ${id}`)
     this.patch(`/gists/${id}`, payload, (err, _gist) => {
+      this.isLoading = false;
       AppActions.doneLoading()
       if (err) {
+        AppActions.notification('failed to update gist')
         return GistActions.error(err)
       }
       if (_gist && _gist.id) {
+        AppActions.notification('saved')
         this.setCache(`gists:${id}`, gist)
       }
       GistActions.updated(gist)

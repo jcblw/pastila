@@ -1,20 +1,20 @@
 .btn {
   padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: var(--round-corner-size);
   border-width: 2px;
   border-style: solid;
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
 }
 
 .btn-primary {
-  color: #fff;
-  border-color: #7a7a7a;
-  background: #7a7a7a;
+  color: var(--white);
+  border-color: var(--grey);
+  background: var(--grey);
 }
 
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
-  border-color: #7a7a7a;
+  border-color: var(--grey);
   outline: none;
 }

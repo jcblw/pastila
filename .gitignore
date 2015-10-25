@@ -4,3 +4,5 @@ devtools
 .pastila
 Pastila.app
 devtools
+
+app/client/styles/app.css

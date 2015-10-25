@@ -4,13 +4,13 @@
 
 .input-group--input {
   padding: 5px 10px;
-  border: 2px solid #f2f2f2;
+  border: 2px solid var(--light-grey);
   border-radius: 4px;
 }
 
 .input-group--input:active,
 .input-group--input:focus {
-  border-color: #a4fff2;
+  border-color: var(--primary-color);
   outline: none;
 }
 

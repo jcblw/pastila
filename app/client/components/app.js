@@ -1,8 +1,10 @@
 'use strict'
 
 const React = require('react')
+const createFragment = require('react-addons-create-fragment')
 const Auth = require('./auth')
 const Notes = require('./notes')
+const Notification = require('./notification')
 const SignIn = require('./signin')
 const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
@@ -31,6 +33,7 @@ class App extends React.Component {
     dispatcher.register((action) => {
       switch (action.action) {
         case AppConstants.APP_INITIAL_STATE:
+          delete action.state.notification;
           this.setState(action.state)
           break
         case AppConstants.APP_STATE_GET:
@@ -45,6 +48,9 @@ class App extends React.Component {
         case AppConstants.APP_LOADING_DONE:
           this.setState({isLoading: false})
           break
+        case AppConstants.APP_NOTIFICATION:
+            this.setState({notification: action.message})
+            break
         case UserConstants.AUTH_START:
           this.onAuthStart()
           break
@@ -155,9 +161,10 @@ class App extends React.Component {
     let content
 
     if (this.state.isAuthed) {
-      content = (
-        <Notes notes={this.state.notes} note={this.state.note} isLoading={this.state.isLoading} />
-      )
+      content = createFragment({
+        notes: (<Notes notes={this.state.notes} note={this.state.note} isLoading={this.state.isLoading} />),
+        notifications: (<Notification message={this.state.notification} timeout={3000} />)
+      })
     } else if (this.state.isAuthenticating) {
       content = (
         <Auth clientId={this.props.clientId} redirectURL={this.props.redirectURL} isLoading={this.state.isLoading} />

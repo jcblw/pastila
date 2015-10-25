@@ -3,6 +3,7 @@
 const React = require('react')
 const Icon = require('./icon')
 const ClipBoard = require('clipboard')
+const AppActions = require('../../actions/app')
 const propTypes = {
   copyText: React.PropTypes.string,
   icon: React.PropTypes.string,
@@ -49,6 +50,7 @@ class CopyLink extends React.Component {
     onCopySuccess (...args) {
       clearTimeout(this._timer)
       this.setState({isCopied: true})
+      AppActions.notification('link copied!')
       this.setTimer()
       if (this.props.onSuccess) {
         this.props.onSuccess(...args)

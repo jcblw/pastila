@@ -1,6 +1,6 @@
 .menu {
   flex: 0 0 75px;
-  background: #fcfcfc;
+  background: var(--light-grey);
   display: flex;
   flex-direction: column;
   z-index: 2;
@@ -10,7 +10,7 @@
   flex: 1;
   list-style-type: none;
   padding: 0;
-  color: #7a7a7a;
+  color: var(--grey);
   white-space: nowrap;
   margin: 0;
   position: relative;
@@ -18,6 +18,12 @@
 
 .menu .list > li {
   position: relative;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.menu .list > li:hover {
+  background: var(--white);
 }
 
 .menu-icon {
@@ -33,21 +39,13 @@
   position: relative;
 }
 
-.menu .list .menu-icon {}
-
-.menu .list .menu-icon:hover {
-  cursor: pointer;
-  background: white;
-}
-
-.menu .list .is-active .menu-icon {}
-
 .contextLink--container {
   position: absolute;
-  top: 0;
-  left: 70px;
-  background: #fff;
+  top: 0px;
+  left: 80px;
+  background: var(--white);
   display: none;
+  margin-top: 20px;
   padding: 20px;
   box-shadow: 0px 1px 3px rgba(0,0,0,.3);
   max-height: 50vh;
@@ -57,6 +55,7 @@
 
 .contextLink--container.contextLink--bottom {
   top: auto;
+  margin-bottom: 20px;
   bottom: 0;
 }
 
@@ -95,7 +94,7 @@
 }
 
 .contextLink--container ul li a {
-  color: #7a7a7a;
+  color: var(--grey);
   text-decoration: none;
   display: block;
   padding: 10px 50px 10px 20px;
@@ -106,10 +105,10 @@
 
 .contextLink--container ul li a:focus {
   outline: none;
-  background-color: #a4fff2;
+  background-color: var(--primary-color);
 }
 
 .contextLink--container ul li a:hover {
-  color: #7a7a7a;
+  color: var(--grey);
   text-decoration: underline;
 }
