@@ -4,12 +4,13 @@
   "description": "a electron a that takes notes via markdown and github gist.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run styles && DEBUG_PASTILA=true electron app/",
+    "start": "DEBUG_PASTILA=true electron app/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd app && npm install",
     "cleanbuild": "git clean -xdf && npm install && npm run build",
     "build": "npm run styles && rm -rf Pastila.app && electron-packager app/ Pastila --icon=assets/icon.icns",
-    "styles": "node scripts/styles.js app/client/styles/main.css app/client/styles/app.css",
+    "styles": "node scripts/styles.js app/client/styles/main.css app/client/app.css",
+    "styles-watch": "node scripts/styles.js app/client/styles/main.css app/client/app.css \"app/client/styles/*.css\"",
     "devtools": "rm -rf devtools && mkdir devtools/ && npm run devtools-install && npm run devtools-postinstall && npm run devtools-build",
     "devtools-install": "cd devtools && git clone --recursive https://github.com/facebook/react-devtools.git",
     "devtools-postinstall": "cd devtools/react-devtools/ && npm install",
@@ -25,5 +26,8 @@
     "electron-prebuilt": "^0.33.2",
     "cssnext": "^1.8.4",
     "postcss-import": "^7.1.0"
+  },
+  "dependencies": {
+    "gaze": "^0.5.2"
   }
 }

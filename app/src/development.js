@@ -1,6 +1,7 @@
 'use strict'
 
 const gaze = require('gaze')
+const fs = require('fs')
 const BrowserWindow = require('browser-window')
 
 module.exports = function (dir = '', mainWindow = {}, factory = function () {}) {
