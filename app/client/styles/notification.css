@@ -1,0 +1,25 @@
+.notification-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  width: 100%;
+  text-align: right;
+  overflow: visible;
+  transform: translate(0, 20px);
+  transition: all .3s ease-in-out;
+  z-index: 200;
+}
+
+.notification-wrapper.is-open {
+  transform: translate(0, -26px);
+}
+
+.notification-content {
+  background: var(--transparent-black);
+  color: var(--white);
+  border-top-left-radius: var(--round-corner-size);
+  padding: 10px;
+  font-size: 12px;
+}

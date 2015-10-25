@@ -1,0 +1,18 @@
+
+:root {
+    /* colors */
+    --white: white;
+    --light-grey: #fcfcfc;
+    --grey: #7a7a7a;
+    --transparent-black: rgba(0, 0, 0, .7);
+
+    --primary-color: #a4fff2;
+
+    /* icon/avatar sizes */
+    --icon-medium: 32px;
+    --icon-small: 20px;
+
+    /* misc */
+    --round-corner-size: 4px;
+
+}
