@@ -87,3 +87,8 @@ body, html, #pastila {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+.ace_hidden-cursors,
+.ace_bracket {
+  opacity:0;
+}

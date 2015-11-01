@@ -4,6 +4,8 @@ const React = require('react')
 const Editor = require('./editor')
 const GistActions = require('../../actions/gist')
 const AppActions = require('../../actions/app')
+const remote = require('remote')
+const shell = remote.require('shell')
 const {autobind} = require('core-decorators')
 const propTypes = {
   note: React.PropTypes.object,
@@ -42,6 +44,11 @@ class Workspace extends React.Component {
     }
   }
 
+  @autobind
+  onLinkClick ({token}) {
+    shell.openExternal(token.value);
+  }
+
   render () {
     const content = this.getContent()
     const id = this.props.note ? this.props.note.id : 'startup'
@@ -50,7 +57,8 @@ class Workspace extends React.Component {
         id={id}
         value={content}
         onChange={this.onFileChange}
-        onLoad={this.onFileChange.cancel} />
+        onLoad={this.onFileChange.cancel}
+        onLinkClick={this.onLinkClick} />
     )
 
     return (
