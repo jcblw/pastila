@@ -2,26 +2,29 @@
 
 const ace = require('brace')
 const React = require('react')
+const {PropTypes, Component} = React;
 const _ = require('lodash')
 const {autobind} = require('core-decorators')
 const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
 const propTypes = {
-  id: React.PropTypes.string,
-  mode: React.PropTypes.string,
-  theme: React.PropTypes.string,
-  name: React.PropTypes.string,
-  height: React.PropTypes.string,
-  width: React.PropTypes.string,
-  fontSize: React.PropTypes.number,
-  showGutter: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
-  value: React.PropTypes.string,
-  onLoad: React.PropTypes.func,
-  maxLines: React.PropTypes.number,
-  readOnly: React.PropTypes.bool,
-  highlightActiveLine: React.PropTypes.bool,
-  showPrintMargin: React.PropTypes.bool
+  id: PropTypes.string,
+  mode: PropTypes.string,
+  theme: PropTypes.string,
+  name: PropTypes.string,
+  height: PropTypes.string,
+  width: PropTypes.string,
+  fontSize: PropTypes.number,
+  showGutter: PropTypes.bool,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+  onLoad: PropTypes.func,
+  maxLines: PropTypes.number,
+  readOnly: PropTypes.bool,
+  highlightActiveLine: PropTypes.bool,
+  showPrintMargin: PropTypes.bool,
+  enableLinking: PropTypes.bool,
+  onLinkClick: PropTypes.func
 }
 const defaultProps = {
   name: 'brace-editor',
@@ -35,15 +38,15 @@ const defaultProps = {
   onChange: null,
   onLoad: null,
   maxLines: null,
-  readOnly: false
+  readOnly: false,
+  enableLinking: true
 }
 
-require('brace/theme/github')
-// require('brace/theme/textmate');
 require('brace/theme/kuroir')
 require('brace/mode/markdown')
+require('../../src/brace-linking')
 
-class Editor extends React.Component {
+class Editor extends Component {
 
   constructor (props) {
     super()
@@ -66,27 +69,33 @@ class Editor extends React.Component {
   componentDidMount () {
     const editor = this.editor = ace.edit(this.props.name)
     const session = editor.getSession()
+    const {props} = this;
     editor.$blockScrolling = Infinity
     editor.setOptions({
       fontFamily: 'osaka-mono'
     })
-    session.setMode(`ace/mode/${this.props.mode}`)
+    session.setMode(`ace/mode/${props.mode}`)
     session.setUseWrapMode(true)
     session.setTabSize(2)
     session.setUseSoftTabs(true)
-    editor.setTheme(`ace/theme/${this.props.theme}`)
-    editor.setFontSize(this.props.fontSize)
+    editor.setTheme(`ace/theme/${props.theme}`)
+    editor.setFontSize(props.fontSize)
     editor.on('change', this.onChange)
-    editor.setValue(this.props.value, -1)
-    editor.renderer.setShowGutter(this.props.showGutter)
+    editor.setValue(props.value, -1)
+    editor.renderer.setShowGutter(props.showGutter)
     editor.setOption('scrollPastEnd', 0.7)
-    editor.setOption('maxLines', this.props.maxLines)
-    editor.setOption('readOnly', this.props.readOnly)
-    editor.setOption('highlightActiveLine', this.props.highlightActiveLine)
+    editor.setOption('maxLines', props.maxLines)
+    editor.setOption('readOnly', props.readOnly)
+    editor.setOption('enableLinking', props.enableLinking)
+    editor.setOption('highlightActiveLine', props.highlightActiveLine)
     editor.setShowPrintMargin(false)
-    if (this.props.onLoad) {
-      this.props.onLoad(this.editor)
+    if (props.onLoad) {
+      props.onLoad(this.editor)
     }
+    if (props.onLinkClick) {
+      editor.on('linkClick', props.onLinkClick);
+    }
+    editor.on('checkboxClick', this.onCheckboxClick);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -99,6 +108,7 @@ class Editor extends React.Component {
     editor.setFontSize(nextProps.fontSize)
     editor.setOption('maxLines', nextProps.maxLines)
     editor.setOption('readOnly', nextProps.readOnly)
+    editor.setOption('enableLinking', nextProps.enableLinking)
     editor.setOption('highlightActiveLine', nextProps.highlightActiveLine)
     editor.setShowPrintMargin(nextProps.setShowPrintMargin)
     if (editor.getValue() !== nextProps.value) {
@@ -109,12 +119,32 @@ class Editor extends React.Component {
     if (nextProps.onLoad) {
       nextProps.onLoad(this.editor)
     }
+    if (nextProps.onLinkClick) {
+      editor.on('linkClick', nextProps.onLinkClick);
+    }
   }
 
   focusEditor () {
     if (this.editor && typeof this.editor.focus === 'function') {
       this.editor.focus()
     }
+  }
+
+  @autobind
+  onCheckboxClick ({position, token, ...args}) {
+    const {value} = token
+    const range = {
+      start: {
+        row: position.row,
+        column: token.start
+      },
+      end: {
+        row: position.row,
+        column: token.start + value.length
+      }
+    }
+    const replace = value === '[ ]' ? '[x]' : '[ ]'
+    this.editor.session.replace(range, replace);
   }
 
   componentWillMount () {

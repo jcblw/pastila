@@ -159,19 +159,23 @@ class App extends React.Component {
 
   render () {
     let content
+    const {notification, note, isLoading, notes, errorMessage} = this.state;
+    const _notification = isLoading ? 'loading...' : notification;
+    const shouldClose = isLoading ? false : true;
+    const timeout = isLoading ? 3000 : 0;
 
     if (this.state.isAuthed) {
       content = createFragment({
-        notes: (<Notes notes={this.state.notes} note={this.state.note} isLoading={this.state.isLoading} />),
-        notifications: (<Notification message={this.state.notification} timeout={3000} />)
+        notes: (<Notes notes={notes} note={note} />),
+        notifications: (<Notification message={_notification} timeout={timeout} shouldClose={shouldClose}/>)
       })
     } else if (this.state.isAuthenticating) {
       content = (
-        <Auth clientId={this.props.clientId} redirectURL={this.props.redirectURL} isLoading={this.state.isLoading} />
+        <Auth clientId={this.props.clientId} redirectURL={this.props.redirectURL} isLoading={isLoading} />
       )
     } else {
       content = (
-        <SignIn errorMessage={this.state.errorMessage} isLoading={this.state.isLoading} />
+        <SignIn errorMessage={errorMessage} isLoading={isLoading} />
       )
     }
 
