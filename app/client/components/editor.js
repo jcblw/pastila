@@ -7,6 +7,7 @@ const _ = require('lodash')
 const {autobind} = require('core-decorators')
 const dispatcher = require('../../src/dispatcher')
 const AppConstants = require('../../constants/app')
+const shortcuts = require('../../src/brace-shortcuts')
 const propTypes = {
   id: PropTypes.string,
   mode: PropTypes.string,
@@ -96,6 +97,9 @@ class Editor extends Component {
       editor.on('linkClick', props.onLinkClick);
     }
     editor.on('checkboxClick', this.onCheckboxClick);
+    shortcuts.forEach((shortcut) => {
+      editor.commands.addCommand(shortcut)
+    })
   }
 
   componentWillReceiveProps (nextProps) {
