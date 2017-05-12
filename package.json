@@ -22,12 +22,12 @@
   "author": "Jacob Lowe",
   "license": "MIT",
   "devDependencies": {
-    "electron-packager": "^3.1.0",
-    "electron-prebuilt": "^0.33.2",
+    "electron-packager": "^8.7.0",
+    "electron-prebuilt": "^1.4.13",
     "cssnext": "^1.8.4",
-    "postcss-import": "^7.1.0"
+    "postcss-import": "^9.1.0"
   },
   "dependencies": {
-    "gaze": "^0.5.2"
+    "gaze": "^1.1.2"
   }
 }
