@@ -2,6 +2,8 @@
 
 # Pastila App
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jcblw/pastila.svg)](https://greenkeeper.io/)
+
 a app lets you takes notes via markdown and github gist.
 
 This is a small app built on [Electron](https://github.com/atom/electron). The client portion of the app is build in [React](https://facebook.github.io/react/index.html).
